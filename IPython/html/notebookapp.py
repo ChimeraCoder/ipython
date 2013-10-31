@@ -163,6 +163,7 @@ class NotebookWebApplication(web.Application):
             # authentication
             cookie_secret=ipython_app.cookie_secret,
             login_url=url_path_join(base_project_url,'/login'),
+            signin_url=url_path_join(base_project_url,'/signup'),
             password=ipython_app.password,
             password_dict=ipython_app.password_dict,
             
@@ -191,6 +192,7 @@ class NotebookWebApplication(web.Application):
         handlers.extend(load_handlers('tree.handlers'))
         handlers.extend(load_handlers('auth.login'))
         handlers.extend(load_handlers('auth.logout'))
+        handlers.extend(load_handlers('auth.signup'))
         handlers.extend(load_handlers('notebook.handlers'))
         handlers.extend(load_handlers('services.kernels.handlers'))
         handlers.extend(load_handlers('services.notebooks.handlers'))

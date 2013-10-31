@@ -18,7 +18,7 @@ from ..base.handlers import IPythonHandler
 class SignupHandler(IPythonHandler):
 
     def _render(self, message=None):
-        self.write(self.render_template('login.html',
+        self.write(self.render_template('signup.html',
                 next=url_escape(self.get_argument('next', default=self.base_project_url)),
                 message=message,
         ))
