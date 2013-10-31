@@ -13,8 +13,8 @@
 
 <div id="ipython-main-app" class="container">
     {% if login_available %}
-        <div id="login-container" class="well">
-          <form action="{{base_project_url}}login?next={{next}}" method="post" class="form">
+        <div id="signup-container" class="well">
+          <form action="{{base_project_url}}signup?next={{next}}" method="post" class="form">
 
             <div class="control-group">
               <label class="control-label" for="username_input">Username</label>
@@ -31,9 +31,16 @@
             </div>
 
             <div class="control-group">
+              <label class="control-label" for="password_input">Password (again)</label>
               <div class="controls">
-                <button class="btn" type="submit" id="login_submit">Log in</button>
-                <button class="btn btn-primary" id="sign_up_submit">Sign up</button>
+                <input type="password" name="password2" id="password2_input">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn" id="sign_up_submit">Sign up</button>
+                <button class="btn btn-primary" type="submit" id="login_submit">Log in</button>
               </div>
             </div>
           </form>
@@ -48,7 +55,6 @@
       {% endfor %}
       </div>
     {% endif %}
-
 <div/>
 
 {% endblock %}
@@ -56,6 +62,6 @@
 
 {% block script %}
 
-<script src="{{static_url("auth/js/loginmain.js") }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{static_url("auth/js/signupmain.js") }}" type="text/javascript" charset="utf-8"></script>
 
 {% endblock %}
