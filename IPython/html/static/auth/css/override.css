@@ -2,7 +2,16 @@
 This is only required when different pages style the same element differently. This is just
 a hack to deal with our current css styles and no new styling should be added in this file.*/
 
+#ipython-main-app {
+    margin: 50px auto;
+    width: 400px;
+}
 
+#login-container {
+    margin: auto;
+    padding: 20px;
+    width: 220px;
+}
 
 
 
