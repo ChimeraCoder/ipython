@@ -79,6 +79,11 @@ class AuthenticatedHandler(RequestHandler):
     def password(self):
         """our password"""
         return self.settings.get('password', '')
+
+    @property
+    def password_dict(self):
+        #TODO do this properly 
+        return self.settings.get('password_dict', {})
     
     @property
     def logged_in(self):

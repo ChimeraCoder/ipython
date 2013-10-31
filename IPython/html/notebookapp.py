@@ -164,6 +164,7 @@ class NotebookWebApplication(web.Application):
             cookie_secret=ipython_app.cookie_secret,
             login_url=url_path_join(base_project_url,'/login'),
             password=ipython_app.password,
+            password_dict=ipython_app.password_dict,
             
             # managers
             kernel_manager=kernel_manager,
@@ -344,6 +345,18 @@ class NotebookApp(BaseIPythonApplication):
                       The string should be of the form type:salt:hashed-password.
                       """
     )
+
+    password_dict = Dict({}, config=True,
+            help="""Dict of hashed passwords to use for web authentication.
+
+                      To generate, type in a python/IPython shell:
+
+                        from IPython.lib import passwd; passwd()
+
+                      The string should be of the form type:salt:hashed-password.
+                      """
+                      )
+
 
     open_browser = Bool(True, config=True,
                         help="""Whether to open in a browser after starting.

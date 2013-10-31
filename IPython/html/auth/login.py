@@ -44,8 +44,9 @@ class LoginHandler(IPythonHandler):
 
     def post(self):
         pwd = self.get_argument('password', default=u'')
+        username = self.get_argument('username', default=u'')
         if self.login_available:
-            if passwd_check(self.password, pwd):
+            if username in self.password_dict and passwd_check(self.password_dict[username], pwd):
                 self.set_secure_cookie(self.cookie_name, str(uuid.uuid4()))
             else:
                 self._render(message={'error': 'Invalid password'})
