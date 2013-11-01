@@ -12,6 +12,7 @@ from IPython.lib import passwd
 
 from ..base.handlers import IPythonHandler
 
+from helpers import save_passwords
 
 #sending email
 import smtplib
@@ -68,6 +69,7 @@ class SignupHandler(IPythonHandler):
             s = smtplib.SMTP('localhost')
             s.sendmail(_from, [email], msg.as_string())
             s.quit()
+            save_passwords(self.password_dict)
 
 
 
