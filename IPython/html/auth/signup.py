@@ -45,6 +45,8 @@ class SignupHandler(IPythonHandler):
             error_dict = {}
             if not email:
                 error_dict['email'] = 'Email required'
+            if email in self.password_dict:
+                error_dict['email'] = 'Email address is already registered'
             if not pwd:
                 error_dict['password'] = 'Password required'
             if pwd != pwd_confirm:
