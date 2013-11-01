@@ -13,6 +13,10 @@ from IPython.lib import passwd
 
 from ..base.handlers import IPythonHandler
 
+from helpers import send_email
+
+from email.mime.text import MIMEText
+
 #-----------------------------------------------------------------------------
 # Handler
 #-----------------------------------------------------------------------------
@@ -74,6 +78,7 @@ class ForgotPasswordHandler(IPythonHandler):
         reset_url = url_concat('http://'+self.request.host+self.base_project_url+'password_reset', {'email':email, 'token':token})
         print reset_url
         #TODO send email
+        send_email(self.from_email, email, 'Password reset', MIMEText(u'Please click the following link to reset your password %s' %reset_url))
 
         self.write(self.render_template('password_reset_email_sent.html'))
 

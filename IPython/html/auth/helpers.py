@@ -1,5 +1,11 @@
 import json
 
+
+#sending email
+import smtplib
+from email.mime.text import MIMEText
+
+
 #TODO figure out best place to put this function
 
 '''Persist the password changes that happen in-memory to disk
@@ -14,6 +20,15 @@ def save_passwords(password_dct, filename):
 
     print("saved passwords")
     return
+
+
+def send_email(_from, to_email, subject, msg):
+            msg['Subject'] = subject
+            msg['From'] = _from
+            msg['To'] = to_email
+            s = smtplib.SMTP('localhost')
+            s.sendmail(_from, [to_email], msg.as_string())
+            s.quit()
 
 
 

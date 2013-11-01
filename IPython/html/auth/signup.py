@@ -12,7 +12,7 @@ from IPython.lib import passwd
 
 from ..base.handlers import IPythonHandler
 
-from helpers import save_passwords
+from helpers import save_passwords, send_email
 
 #sending email
 import smtplib
@@ -58,20 +58,8 @@ class SignupHandler(IPythonHandler):
             self.password_dict[email] = {'password': passwd(pwd), 'token': passwd(token), 'isActive':False}
             #TODO use TLS
             activation_url = url_concat('http://'+self.request.host+self.base_project_url+'activate', {'email':email, 'token':token})
-            print activation_url
-            #TODO send email
-
-            _from = self.from_email
-            msg = MIMEText(u'Please click the following link to activate your account %s' %activation_url)
-            msg['Subject'] = u'Your activation email'
-            msg['From'] = _from
-            msg['To'] = email
-            s = smtplib.SMTP('localhost')
-            s.sendmail(_from, [email], msg.as_string())
-            s.quit()
+            send_email(self.from_email, email, u'Your activation email', MIMEText(u'Please click the following link to activate your account %s' %activation_url))
             save_passwords(self.password_dict, self.password_file)
-
-
 
         self.write(self.render_template('signup_email_sent.html'))
 
