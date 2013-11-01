@@ -13,6 +13,7 @@
 <div id="ipython-main-app" class="container">
     {% if login_available %}
       <div id="login-container" class="auth_container well">
+        <div class="form-title">Login</div>
         {% if message %}
           <div class="alert">
           {% for key in message %}
@@ -22,7 +23,7 @@
           {% endfor %}
           </div>
         {% endif %}
-        <div class="form-title">Login</div>
+
         <form action="{{base_project_url}}login?next={{next}}" method="post" class="form">
 
           <div class="control-group">
