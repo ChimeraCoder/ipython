@@ -103,6 +103,13 @@ class AuthenticatedHandler(RequestHandler):
         return (user and not user == 'anonymous')
 
     @property
+    def is_admin(self):
+        email = self.get_current_user()
+        password_dict = self.password_dict()
+        user = password_dict.get(email, None)
+        return user and user.get('isAdmin', False)
+
+    @property
     def login_available(self):
         """May a user proceed to log in?
 
