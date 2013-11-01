@@ -48,9 +48,9 @@ class LoginHandler(IPythonHandler):
         if self.login_available:
             error_dict = {}
             if not email:
-                error_dict['email'] = 'required'
+                error_dict['email'] = 'Email required'
             if not pwd:
-                error_dict['password'] = 'required'
+                error_dict['password'] = 'Password required'
             if error_dict:
                 self._render(message=error_dict)
                 return
