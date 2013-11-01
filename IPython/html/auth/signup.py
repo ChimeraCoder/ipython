@@ -69,7 +69,7 @@ class SignupHandler(IPythonHandler):
             s = smtplib.SMTP('localhost')
             s.sendmail(_from, [email], msg.as_string())
             s.quit()
-            save_passwords(self.password_dict)
+            save_passwords(self.password_dict, self.password_file)
 
 
 

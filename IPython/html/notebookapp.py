@@ -167,6 +167,7 @@ class NotebookWebApplication(web.Application):
             password=ipython_app.password,
             password_dict=ipython_app.password_dict,
             from_email=ipython_app.from_email,
+            password_file=ipython_app.password_file,
             
             # managers
             kernel_manager=kernel_manager,
@@ -365,6 +366,11 @@ class NotebookApp(BaseIPythonApplication):
                       help="""Email address to use for outgoing emails (password reset/verification)
                       """
                       )
+
+    password_file = Unicode(u'passwords.txt', config=True,
+                      help="""File under which to store (hashed + salted) passwords
+                      """
+                      )   
 
 
     open_browser = Bool(True, config=True,

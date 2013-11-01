@@ -6,10 +6,10 @@ import json
 This should be called anytime the user credentials are modified
 Eventually this should be replaced with a better approach
 '''
-def save_passwords(password_dct):
+def save_passwords(password_dct, filename):
     #TODO figure out best way to store these
     print("saving passwords")
-    with open('tmp_passwords', 'w') as fout:
+    with open(filename, 'w') as fout:
         fout.write(json.dumps(password_dct))
 
     print("saved passwords")
