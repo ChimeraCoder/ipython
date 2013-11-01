@@ -55,7 +55,17 @@
 
       <span id="login_widget">
         {% if logged_in %}
-          <button id="logout">Logout</button>
+
+          <div class="btn-group">
+            <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+              Account
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li><a id="change_password" tabindex="-1" href="#">Change password</a></li>
+              <li><a id="logout" tabindex="-1" href="#">Logout</a></li>
+            </ul>
+          </div>
         {% elif login_available and not logged_in %}
           <button id="login">Login</button>
         {% endif %}

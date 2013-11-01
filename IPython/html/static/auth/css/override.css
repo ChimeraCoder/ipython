@@ -7,11 +7,10 @@ a hack to deal with our current css styles and no new styling should be added in
     width: 400px;
 }
 
-#login-container {
+.auth_container {
     margin: auto;
     padding: 20px;
     width: 220px;
 }
-
 
 

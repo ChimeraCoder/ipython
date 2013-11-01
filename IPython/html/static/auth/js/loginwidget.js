@@ -29,10 +29,13 @@ var IPython = (function (IPython) {
 
     LoginWidget.prototype.bind_events = function () {
         var that = this;
-        this.element.find("button#logout").click(function () {
+        this.element.find("#logout").click(function () {
             window.location = that.base_url+"logout";
         });
-        this.element.find("button#login").click(function () {
+        this.element.find("#change_password").click(function () {
+            window.location = that.base_url+"password_change";
+        });
+        this.element.find("#login").click(function () {
             window.location = that.base_url+"login";
         });
     };
