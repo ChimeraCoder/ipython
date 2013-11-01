@@ -22,10 +22,10 @@ class ActivateHandler(IPythonHandler):
         if self.login_available:
             if email in self.password_dict:
                 if self.password_dict[email]['isActive']:
-                    self.write(self.render_template('signup_already_activated.html'))
+                    self.write(self.render_template('signup_activation_result.html', message='Account already activated.'))
                 elif passwd_check(self.password_dict[email]['token'], token):
                     self.password_dict[email]['isActive'] = True
-                    self.write(self.render_template('signup_activation_successful.html'))
+                    self.write(self.render_template('signup_activation_result.html', message='Account activated.'))
         else:
             message = {'warning': 'Cannot activate account.  Notebook authentication '
                        'is disabled.'}
