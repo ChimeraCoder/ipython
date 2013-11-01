@@ -66,7 +66,7 @@ class ForgotPasswordHandler(IPythonHandler):
 
         error_dict = {}
         if not email:
-            error_dict['email'] = 'Email is required'
+            error_dict['email'] = 'Email required'
         elif email not in self.password_dict:
             error_dict['email'] = 'Account with this email does not exist'
         if error_dict:
