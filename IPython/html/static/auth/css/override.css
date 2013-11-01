@@ -10,7 +10,32 @@ a hack to deal with our current css styles and no new styling should be added in
 .auth_container {
     margin: auto;
     padding: 20px;
-    width: 220px;
+    width: 350px;
 }
 
+.control-label{
+    font-size: 14px;
+    color: #4b4b4b;
+}
 
+.auth_container input {
+    width: 336px;
+}
+
+.auth_container .form{
+    margin-bottom: 0;
+}
+
+.auth_container .control-group:last-of-type{
+    margin-bottom: 0;
+}
+
+.auth_container .form-title{
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: #4b4b4b;
+    font-weight: 600;
+}

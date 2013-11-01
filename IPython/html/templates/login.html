@@ -10,10 +10,19 @@
 {% endblock %}
 
 {% block site %}
-
 <div id="ipython-main-app" class="container">
     {% if login_available %}
       <div id="login-container" class="auth_container well">
+        {% if message %}
+          <div class="alert">
+          {% for key in message %}
+            <div class="message">
+               {{message[key]}}
+            </div>
+          {% endfor %}
+          </div>
+        {% endif %}
+        <div class="form-title">Login</div>
         <form action="{{base_project_url}}login?next={{next}}" method="post" class="form">
 
           <div class="control-group">
@@ -41,20 +50,15 @@
               <a href="{{base_project_url}}signup" id="sign_up_link">Do not have account? <i class="icon-arrow-right"></i> Sign up</a>
             </div>
           </div>
+           <div class="control-group">
+            <div class="controls">
+              <a href="{{base_project_url}}forgot_password" id="forgot_password_link">Forgot Password? <i class="icon-arrow-right"></i> Reset Password</a>
+            </div>
+          </div>
 
         </form>
       </div>
     {% endif %}
-    {% if message %}
-      <div class="row">
-      {% for key in message %}
-        <div class="message">
-           {{ key}} {{message[key]}}
-        </div>
-      {% endfor %}
-      </div>
-    {% endif %}
-
 <div/>
 
 {% endblock %}
