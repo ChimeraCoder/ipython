@@ -56,7 +56,7 @@ class LoginHandler(IPythonHandler):
                 return
 
             if email in self.password_dict and passwd_check(self.password_dict[email]['password'], pwd):
-                self.set_secure_cookie(self.cookie_name, str(uuid.uuid4()))
+                self.set_secure_cookie(self.cookie_name, email)
             else:
                 self._render(message={'error': 'Invalid password'})
                 return
