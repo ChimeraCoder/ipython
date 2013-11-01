@@ -12,6 +12,11 @@ from IPython.lib import passwd
 
 from ..base.handlers import IPythonHandler
 
+
+#sending email
+import smtplib
+from email.mime.text import MIMEText
+
 #-----------------------------------------------------------------------------
 # Handler
 #-----------------------------------------------------------------------------
@@ -50,9 +55,21 @@ class SignupHandler(IPythonHandler):
 
             token = str(uuid.uuid4())
             self.password_dict[email] = {'password': passwd(pwd), 'token': passwd(token), 'isActive':False}
-            activation_url = url_concat('https://'+self.request.host+self.base_project_url+'activate', {'email':email, 'token':token})
+            #TODO use TLS
+            activation_url = url_concat('http://'+self.request.host+self.base_project_url+'activate', {'email':email, 'token':token})
             print activation_url
             #TODO send email
+
+            _from = self.from_email
+            msg = MIMEText(u'Please click the following link to activate your account %s' %activation_url)
+            msg['Subject'] = u'Your activation email'
+            msg['From'] = _from
+            msg['To'] = email
+            s = smtplib.SMTP('localhost')
+            s.sendmail(_from, [email], msg.as_string())
+            s.quit()
+
+
 
         self.write(self.render_template('signup_email_sent.html'))
 
