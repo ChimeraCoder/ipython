@@ -10,24 +10,27 @@
 
 {% block site %}
 
-<div id="ipython-main-app" class="container">
-
-    {% if message %}
-      {% for key in message %}
-        <div class="message {{key}}">
-           {{message[key]}}
-        </div>
-      {% endfor %}
-    {% endif %}
-
+  <div id="ipython-main-app" class="container">
+  <div class="well">
+    <div class="alert">
+      {% if message %}
+        {% for key in message %}
+          <div class="message {{key}}">
+            {{message[key]}}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
     {% if not login_available %}
-    Proceed to the <a href="{{base_project_url}}">dashboard</a>.
+      <a href="{{base_project_url}}" class="btn btn-primary">Go to Dashboard</a>
     {% else %}
-    Proceed to the <a href="{{base_project_url}}login">login page</a>.
+      <a href="{{base_project_url}}login" class="btn btn-primary">Go to Log In</a>
     {% endif %}
+  </div>
+  <div/>
 
 
-<div/>
+
 
 {% endblock %}
 
