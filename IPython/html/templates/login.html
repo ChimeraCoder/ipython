@@ -13,37 +13,43 @@
 
 <div id="ipython-main-app" class="container">
     {% if login_available %}
-        <div id="login-container" class="well">
-          <form action="{{base_project_url}}login?next={{next}}" method="post" class="form">
+      <div id="login-container" class="auth_container well">
+        <form action="{{base_project_url}}login?next={{next}}" method="post" class="form">
 
-            <div class="control-group">
-              <label class="control-label" for="username_input">Username</label>
-              <div class="controls">
-                <input type="text" name="username" id="username_input">
-              </div>
+          <div class="control-group">
+            <label class="control-label" for="email_input">Email</label>
+            <div class="controls">
+              <input type="text" name="email" id="email_input">
             </div>
+          </div>
 
-            <div class="control-group">
-              <label class="control-label" for="password_input">Password</label>
-              <div class="controls">
-                <input type="password" name="password" id="password_input">
-              </div>
+          <div class="control-group">
+            <label class="control-label" for="password_input">Password</label>
+            <div class="controls">
+              <input type="password" name="password" id="password_input">
             </div>
+          </div>
 
-            <div class="control-group">
-              <div class="controls">
-                <button class="btn btn-primary" type="submit" id="login_submit">Log in</button>
-                <a href="{{base_project_url}}signup" class="btn" id="sign_up_submit">Sign up <i class="icon-arrow-right"></i></a>
-              </div>
+          <div class="control-group">
+            <div class="controls">
+              <button class="btn btn-primary" type="submit" id="login_submit">Log in</button>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div class="control-group">
+            <div class="controls">
+              <a href="{{base_project_url}}signup" id="sign_up_link">Do not have account? <i class="icon-arrow-right"></i> Sign up</a>
+            </div>
+          </div>
+
+        </form>
+      </div>
     {% endif %}
     {% if message %}
       <div class="row">
       {% for key in message %}
-        <div class="message {{key}}">
-           {{message[key]}}
+        <div class="message">
+           {{ key}} {{message[key]}}
         </div>
       {% endfor %}
       </div>

@@ -17,9 +17,9 @@
           <form action="{{base_project_url}}signup?next={{next}}" method="post" class="form">
 
             <div class="control-group">
-              <label class="control-label" for="username_input">Username</label>
+              <label class="control-label" for="email_input">Email</label>
               <div class="controls">
-                <input type="text" name="username" id="username_input">
+                <input type="text" name="email" id="email_input">
               </div>
             </div>
 
@@ -40,7 +40,11 @@
             <div class="control-group">
               <div class="controls">
                 <button class="btn  btn-primary" id="sign_up_submit">Sign up</button>
-                <a href="{{base_project_url}}login" class="btn" id="login_submit">Log in<i class="icon-arrow-right"></i></a>
+              </div>
+             </div>
+            <div class="control-group">
+              <div class="controls">
+                <a href="{{base_project_url}}login" id="login_link">Already have account? <i class="icon-arrow-right"></i> Log in</a>
               </div>
             </div>
           </form>
@@ -49,8 +53,8 @@
     {% if message %}
       <div class="row">
       {% for key in message %}
-        <div class="message {{key}}">
-           {{message[key]}}
+        <div class="message">
+           {{key}} {{message[key]}}
         </div>
       {% endfor %}
       </div>
