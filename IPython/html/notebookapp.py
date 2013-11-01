@@ -166,6 +166,7 @@ class NotebookWebApplication(web.Application):
             signin_url=url_path_join(base_project_url,'/signup'),
             password=ipython_app.password,
             password_dict=ipython_app.password_dict,
+            from_email=ipython_app.from_email,
             
             # managers
             kernel_manager=kernel_manager,
@@ -357,6 +358,11 @@ class NotebookApp(BaseIPythonApplication):
                         from IPython.lib import passwd; passwd()
 
                       The string should be of the form type:salt:hashed-password.
+                      """
+                      )
+
+    from_email = Unicode(u'', config=True,
+                      help="""Email address to use for outgoing emails (password reset/verification)
                       """
                       )
 

@@ -86,6 +86,10 @@ class AuthenticatedHandler(RequestHandler):
         return self.settings.get('password_dict', {})
     
     @property
+    def from_email(self):
+        return self.settings.get('from_email', u'')
+
+    @property
     def logged_in(self):
         """Is a user currently logged in?
 
