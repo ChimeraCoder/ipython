@@ -57,6 +57,25 @@ class NotebookHandler(IPythonHandler):
             )
         )
 
+class DriveNotebookHandler(IPythonHandler):
+
+    @web.authenticated
+    def get(self, path='', fileId=None):
+        """get renders the notebook template if a drive file id is given."""
+        if not fileId:
+            raise web.HTTPError(404, u'Notebook Not Found')
+
+        print(fileId)
+
+        fileId = url_escape(fileId)
+        self.write(self.render_template('drive_notebook.html',
+            project=self.project_dir,
+            drive_file_id=fileId,
+            kill_kernel=False,
+            mathjax_url=self.mathjax_url,
+            )
+        )
+
 class NotebookRedirectHandler(IPythonHandler):
     def get(self, path=''):
         nbm = self.notebook_manager
@@ -77,6 +96,7 @@ class NotebookRedirectHandler(IPythonHandler):
 
 
 default_handlers = [
+    (r"/notebooks/gdrive:(?P<fileId>[^/]+)", DriveNotebookHandler),
     (r"/notebooks%s" % _notebook_path_regex, NotebookHandler),
     (r"/notebooks%s" % _path_regex, NotebookRedirectHandler),
 ]

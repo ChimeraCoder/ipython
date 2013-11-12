@@ -422,6 +422,9 @@ var IPython = (function (IPython) {
         IPython.Cell.prototype.fromJSON.apply(this, arguments);
         if (data.cell_type === 'code') {
             if (data.input !== undefined) {
+                if (data.input instanceof Array){
+                    data.input = data.input.join("");
+                }
                 this.set_text(data.input);
                 // make this value the starting point, so that we can only undo
                 // to this state, instead of a blank cell
@@ -432,6 +435,9 @@ var IPython = (function (IPython) {
                 this.set_input_prompt(data.prompt_number);
             } else {
                 this.set_input_prompt();
+            }
+            if (data.outputs instanceof Array){
+                    data.outputs = data.outputs.join("\n");
             }
             this.output_area.fromJSON(data.outputs);
             if (data.collapsed !== undefined) {

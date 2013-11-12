@@ -49,6 +49,7 @@ function (marked) {
     var baseProjectUrl = $('body').data('baseProjectUrl');
     var notebookPath = $('body').data('notebookPath');
     var notebookName = $('body').data('notebookName');
+    var driveFileId= $('body').data('driveFileId');
     notebookName = decodeURIComponent(notebookName);
     notebookPath = decodeURIComponent(notebookPath);
     console.log(notebookName);
@@ -99,7 +100,13 @@ function (marked) {
     
     $([IPython.events]).on('notebook_loaded.Notebook', first_load);
     $([IPython.events]).trigger('app_initialized.NotebookApp');
-    IPython.notebook.load_notebook(notebookName, notebookPath);
+
+    if(driveFileId){
+        IPython.google_drive = new IPython.GoogleDrive("620726701142-59mnlk45v4mqc5ksso11pnvrqvscvr80.apps.googleusercontent.com");
+        IPython.notebook.load_drive_notebook(driveFileId);
+    }else{
+        IPython.notebook.load_notebook(notebookName, notebookPath);
+    }
 
     if (marked) {
         marked.setOptions({

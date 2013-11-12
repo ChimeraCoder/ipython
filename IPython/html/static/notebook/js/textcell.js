@@ -260,6 +260,9 @@ var IPython = (function (IPython) {
         IPython.Cell.prototype.fromJSON.apply(this, arguments);
         if (data.cell_type === this.cell_type) {
             if (data.source !== undefined) {
+                if (data.source instanceof Array){
+                    data.source = data.source.join("");
+                }
                 this.set_text(data.source);
                 // make this value the starting point, so that we can only undo
                 // to this state, instead of a blank cell

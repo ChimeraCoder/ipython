@@ -1898,6 +1898,62 @@ var IPython = (function (IPython) {
         $.ajax(url, settings);
     };
 
+     /**
+     * Request a notebook's data from Google Drive.
+     *
+     * @method load_drive_notebook
+     * @param {String} drive_file_id Drive file id to load
+     */
+     Notebook.prototype.load_drive_notebook = function (drive_file_id) {
+         var that = this;
+         IPython.google_drive.wait_for_drive_api(function () {
+             var request = gapi.client.drive.files.get({
+                 'fileId': drive_file_id
+             });
+             request.execute($.proxy(that.download_notebook_from_drive, that));
+         });
+     };
+
+    /**
+     * Download a notebook's content from Google Drive.
+     *
+     * @method download_notebook_from_drive
+     * @param {File} file Drive file to download
+     */
+    Notebook.prototype.download_notebook_from_drive = function(file){
+        console.log("Started Downloading");
+        var accessToken = gapi.auth.getToken().access_token;
+        var settings = {
+            processData : false,
+            cache : false,
+            type : "GET",
+            dataType : "json",
+            headers: {'Authorization': 'Bearer ' + accessToken},
+            success : $.proxy(this.load_drive_notebook_success,this, file.title),
+            error : $.proxy(this.load_notebook_error,this)
+        };
+        $([IPython.events]).trigger('notebook_loading.Notebook');
+        $.ajax(file.downloadUrl, settings);
+    }
+
+    /**
+     * Success callback for loading a notebook from Google Drive.
+     *
+     * @method load_drive_notebook_success
+     * @param {String} filename Filename of the notebook
+     * @param {Object} content JSON representation of a notebook
+     * @param {String} status Description of response status
+     * @param {jqXHR} xhr jQuery Ajax object
+     */
+     Notebook.prototype.load_drive_notebook_success = function (filename, content, status, xhr) {
+         console.log("Downloaded");
+         var data = {
+             content: content,
+             name: filename
+         };
+         this.load_notebook_success(data, status, xhr);
+     }
+
     /**
      * Success callback for loading a notebook from the server.
      * 
@@ -1957,8 +2013,8 @@ var IPython = (function (IPython) {
         if (this.session == null) {
             this.start_session();
         }
-        // load our checkpoint list
-        IPython.notebook.list_checkpoints();
+        // load our checkpoint list (Disabled)
+        //IPython.notebook.list_checkpoints();
         $([IPython.events]).trigger('notebook_loaded.Notebook');
     };
 

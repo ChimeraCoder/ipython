@@ -17,8 +17,9 @@ $(document).ready(function () {
     $('#new_notebook').button().click(function (e) {
         IPython.notebook_list.new_notebook($('body').data('baseProjectUrl'))
     });
-
+    IPython.google_drive = new IPython.GoogleDrive("620726701142-59mnlk45v4mqc5ksso11pnvrqvscvr80.apps.googleusercontent.com");
     IPython.notebook_list = new IPython.NotebookList('#notebook_list');
+    IPython.drive_notebook_list = new IPython.DriveNotebookList('#drive_notebook_list');
     IPython.cluster_list = new IPython.ClusterList('#cluster_list');
     IPython.login_widget = new IPython.LoginWidget('#login_widget');
 
@@ -32,6 +33,7 @@ $(document).ready(function () {
         if($('.upload_button').length == 0)
         {
             IPython.notebook_list.load_sessions();
+            IPython.drive_notebook_list.load_sessions();
             IPython.cluster_list.load_list();
         }
         if (!interval_id){
@@ -39,6 +41,7 @@ $(document).ready(function () {
                     if($('.upload_button').length == 0)
                     {
                         IPython.notebook_list.load_sessions();
+                        IPython.drive_notebook_list.load_sessions();
                         IPython.cluster_list.load_list();
                     }
                 }, time_refresh*1000);
@@ -64,17 +67,21 @@ $(document).ready(function () {
     enable_autorefresh();
 
     IPython.page.show();
-    
+
     // bound the upload method to the on change of the file select list
     $("#alternate_upload").change(function (event){
         IPython.notebook_list.handelFilesUpload(event,'form');
     });
-    
+
+    $("#drive_alternate_upload").change(function (event){
+        IPython.drive_notebook_list.handelFilesUpload(event,'form');
+    });
+
     // set hash on tab click
     $("#tabs").find("a").click(function() {
         window.location.hash = $(this).attr("href");
     })
-    
+
     // load tab if url hash
     if (window.location.hash) {
         $("#tabs").find("a[href=" + window.location.hash + "]").click();
