@@ -1551,6 +1551,13 @@ var IPython = (function (IPython) {
         };
     };
 
+    Notebook.prototype.onCellChanged = function (e) {
+	var oldValue = e.oldValue;
+	var newValue = e.newValue;
+	var property = e.property;
+	//TODO update UI with change
+    }
+
     /**
      * Load a notebook from JSON (.ipynb).
      * 
@@ -1570,6 +1577,12 @@ var IPython = (function (IPython) {
         // Save the metadata and name.
         this.metadata = content.metadata;
         this.notebook_name = data.name;
+
+
+	// Create Realtime model
+	var realtime_nb = self.realtime_model.create('Notebook', this.notebook_name);
+	self.realtime_model.get_root().set('notebook', realtime_nb);
+
         // Only handle 1 worksheet for now.
         var worksheet = content.worksheets[0];
         if (worksheet !== undefined) {
@@ -1590,6 +1603,10 @@ var IPython = (function (IPython) {
 
                 new_cell = this.insert_cell_below(cell_data.cell_type);
                 new_cell.fromJSON(cell_data);
+		var realtime_cell = self.realtime_model.create('Cell', new_cell.cell_id);
+		realtime_cell.json = cell_data;
+		realtime_nb.cells.set(new_cell.cell_id, realtime_cell);
+		realtime_nb.cells.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doCellChanged);
             };
         };
         if (content.worksheets.length > 1) {

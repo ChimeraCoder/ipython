@@ -101,7 +101,7 @@
 
       myApp.Notebook= function() {}
       myApp.Notebook.prototype.id = "" // Not a collaborative field
-      myApp.Notebook.prototype.id = gapi.drive.realtime.custom.collaborativeField('cells');
+      myApp.Notebook.prototype.cells = gapi.drive.realtime.custom.collaborativeField('cells');
 
       myApp.Cell = function() {}
 
