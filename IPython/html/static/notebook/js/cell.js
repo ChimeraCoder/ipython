@@ -41,7 +41,7 @@ var IPython = (function (IPython) {
         this.selected = false;
         this.element = null;
         this.metadata = {};
-        // load this from metadata later ?
+        this.metadata.cell_id = utils.uuid();
         this.user_highlight = 'auto';
         this.cm_config = options.cm_config;
         this.create_element();
@@ -49,7 +49,7 @@ var IPython = (function (IPython) {
             this.element.data("cell", this);
             this.bind_events();
         }
-        this.cell_id = utils.uuid();
+        //this.cell_id = utils.uuid();
         this._options = options;
     };
 
@@ -143,6 +143,14 @@ var IPython = (function (IPython) {
         this.selected = false;
     };
 
+
+    /**
+     * @method get_id
+     */
+    Cell.prototype.get_id = function () {
+        return this.metadata.cell_id;
+    };
+
     /**
      * should be overritten by subclass
      * @method get_text
@@ -201,7 +209,13 @@ var IPython = (function (IPython) {
     Cell.prototype.fromJSON = function (data) {
         if (data.metadata !== undefined) {
             this.metadata = data.metadata;
+        }else{
+            this.metadata  = {};
         }
+        if(!this.metadata.hasOwnProperty('cell_id')){
+            this.metadata.cell_id = utils.uuid();
+        }
+
         this.celltoolbar.rebuild();
     };
 

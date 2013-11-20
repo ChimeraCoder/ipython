@@ -1082,6 +1082,9 @@ var IPython = (function (IPython) {
     Notebook.prototype.copy_cell = function () {
         var cell = this.get_selected_cell();
         this.clipboard = cell.toJSON();
+        if( this.clipboard.metadata.uuid != undefined){
+            delete  this.clipboard.metadata.uuid;
+        }
         this.enable_paste();
     };
 
@@ -1095,6 +1098,7 @@ var IPython = (function (IPython) {
             var cell_data = this.clipboard;
             var new_cell = this.insert_cell_above(cell_data.cell_type);
             new_cell.fromJSON(cell_data);
+            new_cell.metadata.cell_id = utils.uuid();
             var old_cell = this.get_next_cell(new_cell);
             this.delete_cell(this.find_cell_index(old_cell));
             this.select(this.find_cell_index(new_cell));
@@ -1111,6 +1115,7 @@ var IPython = (function (IPython) {
             var cell_data = this.clipboard;
             var new_cell = this.insert_cell_above(cell_data.cell_type);
             new_cell.fromJSON(cell_data);
+            new_cell.metadata.cell_id = utils.uuid();
         };
     };
 
@@ -1124,6 +1129,7 @@ var IPython = (function (IPython) {
             var cell_data = this.clipboard;
             var new_cell = this.insert_cell_below(cell_data.cell_type);
             new_cell.fromJSON(cell_data);
+            new_cell.metadata.cell_id = utils.uuid();
         };
     };
 
