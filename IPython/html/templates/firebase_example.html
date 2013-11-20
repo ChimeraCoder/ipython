@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+<script type='text/javascript'
+        src='https://cdn.firebase.com/v0/firebase-simple-login.js'>
+</script>
+<link rel='stylesheet' type='text/css' href='../css/example.css'>
+</head>
+<body>
+
+
+<div>
+<form id="signup" action="#">
+Sign up
+  <input type='email' class='signup' id="signup-email" name="email" placeholder='Email'>
+  <input type='password' class='signup' id="signup-password" name="password" placeholder='Password'>
+  <input type="submit">
+</form>
+</div>
+
+<div>
+<form id="login" action="#">
+Login
+  <input type='email' class='login' id="login-email" name="email" placeholder='Email'>
+  <input type='password' class='login' id="login-password" name="password" placeholder='Password'>
+  <input type="submit">
+</form>
+</div>
+
+<div>
+<form id="logout" action="#">
+Logout
+  <input type="submit">
+</form>
+</div>
+
+
+
+
+
+<div class="notebook-cell" id="5032d8826b">
+    <div class="comments" id='comments-5032d8826b'>
+        <input type='text' class='nameInput' id="comments-5032d8826b-nameInput" placeholder='Name'>
+        <input type='text' class='messageInput' id="comments-5032d8826b-messageInput" placeholder='Message'>
+    </div>
+</div>
+<script>
+    var baseURI = 'https://ipython-dev.firebaseio.com';
+    var myDataRef = new Firebase(baseURI);
+
+    var auth = new FirebaseSimpleLogin(myDataRef, function(error, user){
+      if (error){
+        console.log(error);
+      } else if (user){
+        console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+        console.log(user)
+      } else {
+        //user is logged out
+      }
+    });
+
+
+    $("#signup").submit(function(event){
+      event.preventDefault();
+      var email = $("#signup").find('input[name="email"]').val();
+      var password = $("#signup").find('input[name="password"]').val();
+      auth.createUser(email, password, function(error, user){
+        if(!error){
+          console.log("Created user " + email);
+        } else{
+          console.log("ERROR: " + error)
+        }
+      })
+    });
+
+ 
+    $("#login").submit(function(event){
+      event.preventDefault();
+      var email = $("#login").find('input[name="email"]').val();
+      var password = $("#login").find('input[name="password"]').val();
+
+      auth.login('password', {
+        "email" : email,
+        "password" : password,
+      });
+    });
+        
+ 
+    $("#logout").submit(function(event){
+      event.preventDefault();
+      auth.logout();
+    });
+
+    $('.messageInput').keypress(function (e) {
+      var parentCellId = $(e.target).parent().attr("id")
+      console.log("outputting " + parentCellId)
+
+      if (e.keyCode == 13) {
+
+        var name = $("#" + parentCellId + '-nameInput').val();
+        var text = $("#" + parentCellId + '-messageInput').val();
+        myDataRef.push({"parentCellId" : parentCellId, "name": name, "text": text});
+        $('#' + parentCellId + '-nameInput').val('');
+        $('#' + parentCellId + '-messageInput').val('');
+      }
+    });
+
+    myDataRef.on('child_added', function(snapshot) {
+      var message = snapshot.val();
+      displayChatMessage(message.parentCellId, message.name, message.text);
+    });
+
+    function displayChatMessage(cellId, name, text) {
+        //TODO figure out the commentId
+        //it should not actually be the cellId
+        var commentId = cellId;
+
+        var html = '<div class="comment" id="' + commentId + '"><div><em>' + name + "</em></div><div>"+ text + '</div></div>';
+
+
+      $('#' + cellId).append(html);
+      $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+      //$('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+    };
+
+
+    // This will only work if the userid is the same as the logged in user's 
+    function readDropboxSubmission(userid){
+      var url = baseURI + '/cells/dropbox/' + userid
+      var cellDataRef = new Firebase(url);
+      cellDataRef.on('value', function(comments){
+        if(comments.val() === null){
+          console.log("Cell does not exist");
+        } else{
+          console.log("Fetched " + comments);
+          console.log(comments.val());
+          console.log(comments.val().comments);
+        }
+      });
+    }
+
+
+    // This will only work if the userid is the same as the logged in user's 
+    function submitToDropbox(userid, comment_obj){
+      var url = baseURI + '/cells/dropbox/' + userid
+      commentListRef = new Firebase(url);
+
+      // Generate a reference to a new location with push
+      var newPushRef = commentListRef.push();
+
+      newPushRef.set(comment_obj);
+
+      console.log(newPushRef.name());
+    }
+
+
+  /**
+   * submitToDropbox(8, {name: "Mr. Submitter", text: "Here is my quiz that I am submitting to your dropbox. I can read it afterwards, but not modify it"})
+   * readDropboxSubmission(3)
+
+   **/
+
+</script>
+</body>
+</html>
