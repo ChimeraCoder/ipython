@@ -64,6 +64,7 @@ function (marked) {
     IPython.login_widget = new IPython.LoginWidget('span#login_widget',{baseProjectUrl:baseProjectUrl});
     IPython.notebook = new IPython.Notebook('div#notebook',{baseProjectUrl:baseProjectUrl, notebookPath:notebookPath, notebookName:notebookName});
     IPython.save_widget = new IPython.SaveWidget('span#save_widget');
+    IPython.comment_widget = new IPython.CommentWidget('div#comment_widget');
     IPython.menubar = new IPython.MenuBar('#menubar',{baseProjectUrl:baseProjectUrl, notebookPath: notebookPath})
     IPython.toolbar = new IPython.MainToolBar('#maintoolbar-container')
     IPython.tooltip = new IPython.Tooltip()

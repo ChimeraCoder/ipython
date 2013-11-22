@@ -60,7 +60,7 @@ var IPython = (function (IPython) {
         var username = comment.username;
         var text = comment.text;
         var parentCell = IPython.notebook.get_cell_by_id(parentCellId);
-
+        IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
         // TODO add the comment to the parent cell
         console.log("Displaying message for " + parentCellId + " " + username + " " + text);
     }
