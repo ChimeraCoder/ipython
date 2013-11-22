@@ -90,13 +90,14 @@ div.output_prompt{color:darkred;}
 .CodeMirror-gutters{border-bottom-left-radius:4px;border-top-left-radius:4px;}
 .CodeMirror pre{padding:0;border:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}
 div#sidebar_panel{width:299px;margin-left:0;background-color:#fafafa;}
-div#comment_widget .comment{position:relative;}div#comment_widget .comment .user_avatar{position:absolute;left:5px;top:5px;width:30px;height:30px;background-size:100% 100%;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);-moz-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);}
+div#comment_widget .comment{position:relative;}div#comment_widget .comment.hightlight{background-color:#ffffaa;}
+div#comment_widget .comment .user_avatar{position:absolute;left:5px;top:5px;width:30px;height:30px;background-size:100% 100%;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);-moz-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);}
 div#comment_widget .comment .content{margin-left:40px;padding:5px 5px 5px 0px;border-bottom:1px solid #ebebeb;}div#comment_widget .comment .content .comment_title{font-size:12px;line-height:15px;}div#comment_widget .comment .content .comment_title .user_name{color:#7a7a7a;}
 div#comment_widget .comment .content .comment_title .comment_time{text-transform:uppercase;color:#aaaaaa;font-size:10px;}div#comment_widget .comment .content .comment_title .comment_time:before{content:'・';}
 div#comment_widget .comment .content .comment_title .comment_text{color:#222222;}
 div#comment_widget .comment .reply_button{font-size:12px;color:#999;color:#aaaaaa;cursor:pointer;float:right;}div#comment_widget .comment .reply_button:hover{color:#007aff;}
 div#comment_widget .comment .reply_button:active{color:#0058b8;}
-div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
+div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;cursor:pointer;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
 div#comment_input_area #comment_reply_to:hover .remove-mark:before{content:"\f00d";}
 div#comment_input_area #comment_textarea{line-height:22px;overflow:hidden;}
 .completions{position:absolute;z-index:10;overflow:hidden;border:1px solid #ababab;border-radius:4px;-webkit-box-shadow:0px 6px 10px -1px #adadad;-moz-box-shadow:0px 6px 10px -1px #adadad;box-shadow:0px 6px 10px -1px #adadad;}

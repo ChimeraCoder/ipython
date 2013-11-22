@@ -364,11 +364,23 @@ var IPython = (function (IPython) {
         IPython.comment_widget.reset();
         for(var i = 0; i < this.comments.length; i++){
             var comment = this.comments[i];
-            IPython.comment_widget.insert_comment({username: comment.username, time:Date.now(), text: comment.text});
+            IPython.comment_widget.insert_comment(comment);
             //console.log("Displaying message for " + parentCellId + " " + username + " " + text);
 
         }
     }
+
+    Cell.prototype.get_comment_by_id = function(id){
+        if (!this.hasOwnProperty("comments"))return null;
+        for(var i = 0; i < this.comments.length; i++){
+            var comment = this.comments[i];
+            if(comment.comment_id===id){
+                return comment;
+            }
+        }
+        return null;
+    }
+
 
     IPython.Cell = Cell;
 

@@ -30,6 +30,10 @@ var IPython = (function (IPython) {
             });
         }
 
+        $([IPython.events]).on('select.Cell', function(cell){
+
+        });
+
         if(IPython.notebook.session === null){
             $([IPython.events]).on('notebook_loaded.Notebook', initAllCells)
         } else{
@@ -44,13 +48,13 @@ var IPython = (function (IPython) {
         var that = this;
         cellCommentsDataRef.on('child_added', function(snapshot){
             var comment = snapshot.val();
-            console.log(comment);
+            comment.comment_id = snapshot.name();
             that.updateCellComments(comment);
         });
     }
 
     Fbase.prototype.submitComment = function(comment_obj){
-        var cellId = comment_obj.cellId
+        var cellId = comment_obj.cell_id;
         var url = this.baseURI + '/cells/' + cellId + "/comments/"; 
         var commentListRef = new Firebase(url);
 
@@ -64,11 +68,7 @@ var IPython = (function (IPython) {
 
 
     Fbase.prototype.updateCellComments = function(comment){
-        var cellId = comment.cellId;
-        var username = comment.username;
-        var text = comment.text;
-        var parentCell = IPython.notebook.get_cell_by_id(cellId);
-        console.log(parentCell);
+        var parentCell = IPython.notebook.get_cell_by_id(comment.cell_id);
         if(parentCell){
             if (!parentCell.hasOwnProperty("comments")){
                 parentCell.comments = [];
@@ -77,7 +77,7 @@ var IPython = (function (IPython) {
 
             //If the current cell is selected, append it to the widget
             if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
-                IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
+                IPython.comment_widget.insert_comment(comment);
             }
         }
     }
