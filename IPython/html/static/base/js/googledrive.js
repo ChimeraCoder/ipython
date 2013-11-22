@@ -35,8 +35,7 @@ var IPython = (function (IPython) {
         $.ajax({
             url: "https://apis.google.com/js/client.js",
             dataType: "script",
-            cache: true,
-            callback: this.setUserInfo
+            cache: true
         });
     }
 
@@ -67,6 +66,7 @@ var IPython = (function (IPython) {
     GoogleDrive.prototype.handle_auth_result = function(authResult) {
         if (authResult) {
             gapi.client.load('drive', 'v2', $.proxy(this.handle_drive_api_load,this));
+            this.setUserInfo();
             $([IPython.events]).trigger('authorization_complete.GoogleDrive');
         } else {
             $([IPython.events]).trigger('authorization_required.GoogleDrive');
@@ -82,13 +82,11 @@ var IPython = (function (IPython) {
 
     GoogleDrive.prototype.setUserInfo = function(){
         var that = this;
-        gapi.client.load('plus','v1', function(){
-            var request = gapi.client.plus.people.get({
-                'userId': 'me'
-            });
+        gapi.client.load('oauth2','v2', function(){
+            var request = gapi.client.oauth2.userinfo.get();
             request.execute(function(resp) {
                 that.userId = resp.id;
-                that.displayName = resp.displayName;
+                that.displayName = resp.name;
                 console.log('Retrieved profile for:' + that.userId);
                 console.log('Retrieved profile for:' + that.displayName);
             });

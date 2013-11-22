@@ -20,7 +20,6 @@ var IPython = (function (IPython) {
         this.reply_head = null;
         this.load_templates();
         this.bind_events();
-
     };
 
     CommentWidget.prototype.insert_comment = function(comment_obj){
@@ -41,7 +40,7 @@ var IPython = (function (IPython) {
 
     CommentWidget.prototype.load_templates = function() {
         this.comment_cell_template = function(data){
-            var html = '<div class="comment" data-comment-id="'+data.comment_id+'">' +
+            var html = '<div class="comment" id="comment'+data.comment_id+'">' +
                 '  <div class="user_avatar" style="background-image:url(https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&amp;s=60);"></div>' +
                 '  <div class="content">' +
                 '    <div class="comment_title">' +
@@ -50,7 +49,7 @@ var IPython = (function (IPython) {
                 '    </div>' +
                 '    <div class="comment_text">';
             if (data.parent_username){
-                html+='<a class="label label-info comment_reply" data-parent-id="'+data.parent_comment_id+'" href="#"><i class="icon-mail-forward"></i>' + data.parent_username+ '</a> ';
+                html+='<a class="label label-info comment_reply" href="#comment'+data.parent_comment_id+'"><i class="icon-mail-forward"></i>' + data.parent_username+ '</a> ';
             }
             html += data.text +
                 '    </div>' +
@@ -73,11 +72,9 @@ var IPython = (function (IPython) {
     CommentWidget.prototype.comment_hightlight_parent = function(event){
         var comment = $(event.currentTarget).closest('.comment');
         var comment_obj = comment.data('comment');
-
-        var comment_parent = $(".comment[data-comment-id="+ comment_obj.parent_comment_id +"]");
+        var comment_parent = $("#comment"+ comment_obj.parent_comment_id);
         $('.comment').removeClass("hightlight");
         comment_parent.addClass("hightlight");
-
     }
 
 
@@ -90,9 +87,11 @@ var IPython = (function (IPython) {
     CommentWidget.prototype.comment = function(event){
         var text = this.comment_textarea.val();
         if(text!==""){
+
+
             var data = {
-                username: "Anonymous",
-                user_id: "1",
+                username: IPython.google_drive.displayName,
+                user_id: IPython.google_drive.userId,
                 cell_id: IPython.notebook.get_selected_cell().get_id(),
                 text: text,
                 time: Date.now()
