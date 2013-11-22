@@ -35,7 +35,8 @@ var IPython = (function (IPython) {
         $.ajax({
             url: "https://apis.google.com/js/client.js",
             dataType: "script",
-            cache: true
+            cache: true,
+            callback: setUserInfo
         });
     }
 
@@ -79,17 +80,17 @@ var IPython = (function (IPython) {
     }
 
 
-    GoogleDrive.prototype.getUserInfo= function(f){
+    GoogleDrive.prototype.setUserInfo = function(){
+        var that = this;
         gapi.client.load('plus','v1', function(){
             var request = gapi.client.plus.people.get({
                 'userId': 'me'
             });
             request.execute(function(resp) {
-                var id = resp.id;
-                var displayName = resp.displayName;
-                console.log('Retrieved profile for:' + resp.id);
-                console.log('Retrieved profile for:' + resp.displayName);
-                f(id, displayName);
+                that.userId = resp.id;
+                that.displayName = resp.displayName;
+                console.log('Retrieved profile for:' + that.userId);
+                console.log('Retrieved profile for:' + that.displayName);
             });
         });
     }
