@@ -64,7 +64,6 @@ function (marked) {
     IPython.login_widget = new IPython.LoginWidget('span#login_widget',{baseProjectUrl:baseProjectUrl});
     IPython.notebook = new IPython.Notebook('div#notebook',{baseProjectUrl:baseProjectUrl, notebookPath:notebookPath, notebookName:notebookName});
     IPython.save_widget = new IPython.SaveWidget('span#save_widget');
-    IPython.comment_widget = new IPython.CommentWidget('div#comment_widget');
     IPython.menubar = new IPython.MenuBar('#menubar',{baseProjectUrl:baseProjectUrl, notebookPath: notebookPath})
     IPython.toolbar = new IPython.MainToolBar('#maintoolbar-container')
     IPython.tooltip = new IPython.Tooltip()
@@ -104,14 +103,12 @@ function (marked) {
 
     if(driveFileId){
         IPython.google_drive = new IPython.GoogleDrive("620726701142-59mnlk45v4mqc5ksso11pnvrqvscvr80.apps.googleusercontent.com");
+        IPython.firebase = new IPython.Fbase();
         IPython.notebook.load_drive_notebook(driveFileId);
-
+        IPython.comment_widget = new IPython.CommentWidget('div#comment_widget');
     }else{
         IPython.notebook.load_notebook(notebookName, notebookPath);
     }
-
-    //TODO move this into the same block in which driveFileId is loaded
-    IPython.firebase = new IPython.Fbase()
 
     if (marked) {
         marked.setOptions({

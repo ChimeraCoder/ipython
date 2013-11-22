@@ -358,6 +358,7 @@ var IPython = (function (IPython) {
     };
 
     Cell.prototype.display_comments_in_widget = function(){
+        if(!IPython.hasOwnProperty("comment_widget"))return;
         if (!this.hasOwnProperty("comments")){
             this.comments = [];
         }
