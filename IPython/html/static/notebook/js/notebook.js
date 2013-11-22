@@ -610,6 +610,21 @@ var IPython = (function (IPython) {
     };
 
     /**
+     * Find a cell by specifying the unique id for the cell
+     *
+     */
+
+    Notebook.prototype.get_cell_by_id = function(target_id){
+        var cells = this.get_cells();
+        for(i = 0; i < cells; i++){
+            if(cells[i].get_id() === target_id){
+                return cell
+            }
+        }
+    }
+
+
+    /**
      * Check whether a cell index is valid.
      * 
      * @method is_valid_cell_index
