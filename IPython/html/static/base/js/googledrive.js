@@ -36,7 +36,7 @@ var IPython = (function (IPython) {
             url: "https://apis.google.com/js/client.js",
             dataType: "script",
             cache: true,
-            callback: setUserInfo
+            callback: this.setUserInfo
         });
     }
 
