@@ -20,13 +20,29 @@ var IPython = (function (IPython) {
         this.myDataRef = new Firebase(this.baseURI);
 
         var that = this;
-        this.myDataRef.on('child_added', function(snapshot) {
-            var message = snapshot.val();
-            that.displayComment(message.parentCellId, message.name, message.text);
+        $([IPython.events]).on('notebook_loaded.Notebook', function(){
+            var cells = IPython.notebook.get_cells();
+            $.each(cell, function(){
+                var cellId = cell.id;
+                that.initCellComments(cellId);
+            });
+        })
+    }
+
+    Fbase.prototype.initCellComments = function(cellId){
+        var url = this.baseURI + "/cells/" + cellId + "/comments/";
+        var cellCommentsDataRef = new Firebase(url);
+
+        var that = this;
+        cellCommentsDataRef.on('child_added', function(snapshot){
+            var comment = snapshot.val();
+            console.log(comment);
+            that.displayComment(comment);
         });
     }
 
-    Fbase.prototype.submitComment = function(cellId, userId, comment_obj){
+    Fbase.prototype.submitComment = function(comment_obj){
+        var cellId = comment_obj.cellId
         var url = this.baseURI + '/cells/' + cellId + "/comments/"; 
         var commentListRef = new Firebase(url);
 
@@ -39,7 +55,13 @@ var IPython = (function (IPython) {
     }
 
 
-    Fbase.prototype.displayComment = function(parentCellId, username, text){
+    Fbase.prototype.displayComment = function(comment){
+        var parentCellId = comment.parentCellId;
+        var username = comment.username;
+        var text = comment.text;
+        var parentCell = IPython.notebook.get_cell_by_id(parentCellId);
+
+        // TODO add the comment to the parent cell
         console.log("Displaying message for " + parentCellId + " " + username + " " + text);
     }
 
