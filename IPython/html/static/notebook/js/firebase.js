@@ -64,19 +64,21 @@ var IPython = (function (IPython) {
 
 
     Fbase.prototype.updateCellComments = function(comment){
-        var parentCellId = comment.parentCellId;
+        var cellId = comment.cellId;
         var username = comment.username;
         var text = comment.text;
-        var parentCell = IPython.notebook.get_cell_by_id(parentCellId);
+        var parentCell = IPython.notebook.get_cell_by_id(cellId);
+        console.log(parentCell);
+        if(parentCell){
+            if (!parentCell.hasOwnProperty("comments")){
+                parentCell.comments = [];
+            }
+            parentCell.comments.push(comment);
 
-        if (!parentCell.hasOwnProperty("comments")){
-            parentCell.comments = [];
-        }
-        parentCell.comments.push(comment);
-
-        //If the current cell is selected, append it to the widget
-        if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
-            IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
+            //If the current cell is selected, append it to the widget
+            if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
+                IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
+            }
         }
     }
 

@@ -131,6 +131,7 @@ var IPython = (function (IPython) {
     Cell.prototype.select = function () {
         this.element.addClass('selected');
         this.selected = true;
+        this.display_comments_in_widget();
     };
 
 
@@ -356,14 +357,15 @@ var IPython = (function (IPython) {
         this.code_mirror.setOption('mode', default_mode);
     };
 
-    Cell.prototype.displayCommentsInWidget = function(){
-        if (this.hasOwnProperty("comments")){
+    Cell.prototype.display_comments_in_widget = function(){
+        if (!this.hasOwnProperty("comments")){
             this.comments = [];
         }
+        IPython.comment_widget.reset();
         for(var i = 0; i < this.comments.length; i++){
-            var comment = comments[i];
-            IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
-            console.log("Displaying message for " + parentCellId + " " + username + " " + text);
+            var comment = this.comments[i];
+            IPython.comment_widget.insert_comment({username: comment.username, time:Date.now(), text: comment.text});
+            //console.log("Displaying message for " + parentCellId + " " + username + " " + text);
 
         }
     }

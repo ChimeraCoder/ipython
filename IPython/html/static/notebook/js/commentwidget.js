@@ -53,6 +53,13 @@ var IPython = (function (IPython) {
         this.element.on('click', '#comment_reply_to', $.proxy(this.remove_reply_head, this));
     };
 
+
+    CommentWidget.prototype.reset = function(event){
+        this.comment_list.empty();
+        if(this.reply_head)this.reply_head.remove();
+        this.comment_textarea.text('');
+    }
+
     CommentWidget.prototype.comment = function(event){
 
     }
@@ -70,7 +77,7 @@ var IPython = (function (IPython) {
     }
 
     CommentWidget.prototype.remove_reply_head = function(event){
-        this.reply_head.remove();
+        if(this.reply_head)this.reply_head.remove();
         this.comment_textarea.css('text-indent', 0);
     }
 
