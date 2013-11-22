@@ -176,6 +176,10 @@ var IPython = (function (IPython) {
             $('div#header').toggle();
             IPython.layout_manager.do_resize();
         });
+        this.element.find('#toggle_sidebar').click(function () {
+            IPython.notebook.toggle_sidebar_panel();
+            IPython.layout_manager.do_resize();
+        });
         this.element.find('#toggle_toolbar').click(function () {
             $('div#maintoolbar').toggle();
             IPython.layout_manager.do_resize();

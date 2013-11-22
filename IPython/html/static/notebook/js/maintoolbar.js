@@ -116,6 +116,17 @@ var IPython = (function (IPython) {
                         }
                 }
             ],'run_int');
+        this.add_buttons_group([
+                {
+                    id : 'toggle_s',
+                    label : 'Toggle Sidebar',
+                    icon : 'icon-comment',
+                    text: 'Toggle Comment',
+                    callback : function () {
+                    IPython.notebook.toggle_sidebar_panel();
+                        }
+                }
+            ]);
     };
 
     MainToolBar.prototype.add_celltype_list = function () {

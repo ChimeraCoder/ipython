@@ -54,6 +54,7 @@ var IPython = (function (IPython) {
         this.notebook_name_blacklist_re = /[\/\\:]/;
         this.nbformat = 3 // Increment this when changing the nbformat
         this.nbformat_minor = 0 // Increment this when changing the nbformat
+        this.sidebar_shown = false;
         this.style();
         this.create_elements();
         this.bind_events();
@@ -2329,6 +2330,25 @@ var IPython = (function (IPython) {
     Notebook.prototype.delete_checkpoint_error = function (xhr, status, error_msg) {
         $([IPython.events]).trigger('checkpoint_delete_failed.Notebook');
     };
+
+    Notebook.prototype.toggle_sidebar_panel = function(){
+        if(this.sidebar_shown){
+            this.hide_sidebar_panel();
+        }else{
+            this.show_sidebar_panel();
+        }
+        this.sidebar_shown = !this.sidebar_shown;
+    }
+
+    Notebook.prototype.show_sidebar_panel = function(){
+        $('#sidebar_panel').show();
+        $('#notebook_panel').addClass("span9");
+    }
+
+    Notebook.prototype.hide_sidebar_panel = function(){
+        $('#sidebar_panel').hide();
+        $('#notebook_panel').removeClass("span9");
+    }
 
 
     IPython.Notebook = Notebook;
