@@ -78,6 +78,22 @@ var IPython = (function (IPython) {
                 $.proxy(this.handle_auth_result,this));
     }
 
+
+    GoogleDrive.prototype.getUserInfo= function(f){
+        gapi.client.load('plus','v1', function(){
+            var request = gapi.client.plus.people.get({
+                'userId': 'me'
+            });
+            request.execute(function(resp) {
+                var id = resp.id;
+                var displayName = resp.displayName;
+                console.log('Retrieved profile for:' + resp.id);
+                console.log('Retrieved profile for:' + resp.displayName);
+                f(id, displayName);
+            });
+        });
+    }
+
     IPython.GoogleDrive = GoogleDrive;
 
     return IPython;
