@@ -16,18 +16,30 @@ span#notebook_name {
 }
 
 div#notebook_panel {
-    margin: 0px 0px 0px 0px;
+    //margin: 0px 0px 0px 0px;
+    position: relative;
+    z-index: 2;
     padding: 0px;
     .box-shadow(0 -1px 10px rgba(0,0,0,.1));
 }
+
+div#notebook_wrapper {
+
+}
+
+div#sidebar_panel {
+  position: relative;
+
+}
+
 div#notebook {
     overflow-y: scroll;
     overflow-x: auto;
     width: 100%;
     /* This spaces the cell away from the edge of the notebook area */
     padding: 5px 5px 15px 5px;
-    margin: 0px;
-    border-top: 1px solid @border_color;
+    //margin: 0px;
+
 }
 
 div.ui-widget-content {

@@ -183,19 +183,68 @@ class="notebook_app"
 </div>
 </div>
 
-<div id="ipython-main-app">
-
-    <div id="notebook_panel">
+  <div id="ipython-main-app" class="container">
+    <div id="notebook_wrapper"class="row">
+      <div id="notebook_panel" class="span9">
         <div id="notebook"></div>
         <div id="pager_splitter"></div>
         <div id="pager">
-            <div id='pager_button_area'>
-            </div>
-            <div id="pager-container" class="container"></div>
+          <div id='pager_button_area'>
+          </div>
+          <div id="pager-container"></div>
         </div>
+      </div>
+      <div id="sidebar_panel" class="span3">
+        <div id="cell_info_wrapper">
+
+        </div>
+        <div id="comment_list_wrapper">
+          <div id="comment_list">
+            <div class="comment">
+              <div class="user_avatar" style="background-image:url('https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&s=60');"></div>
+              <div class="content">
+                <div class="comment_title">
+                  <span class="user_name">Yiqiu Huang</span><span class="comment_time">5 mins ago</span>
+                  <span class="reply_button"><i class="icon-reply"></i> reply</span>
+                </div>
+                <div class="comment_text">
+                  I have a windows phone and it's not coming up I have to use my ipad for it
+                </div>
+              </div>
+            </div>
+            <div class="comment">
+              <div class="user_avatar" style="background-image:url('https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&s=60');"></div>
+              <div class="content">
+                <div class="comment_title">
+                  <span class="user_name">Yiqiu Huang</span><span class="comment_time">5 mins ago</span>
+                  <span class="reply_button"><i class="icon-reply"></i> reply</span>
+                </div>
+                <div class="comment_text">
+                  I have a windows phone and it's not coming up I have to use my ipad for it
+                </div>
+              </div>
+            </div>
+            <div class="comment">
+              <div class="user_avatar" style="background-image:url('https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&s=60');"></div>
+              <div class="content">
+                <div class="comment_title">
+                  <span class="user_name">Yiqiu Huang</span><span class="comment_time">5 mins ago</span>
+                </div>
+                <div class="comment_text">
+                  I have a windows phone and it's not coming up I have to use my ipad for it
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="comment_input_area">
+              <div id="comment_reply_to" class="btn btn-mini btn-primary"><i class="remove-mark icon-remove"></i> Yiqiu Huang</div>
+              <textarea id="comment_textarea" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
     </div>
 
-</div>
+  </div>
 <div id='tooltip' class='ipython_tooltip' style='display:none'></div>
 
 
