@@ -11,7 +11,7 @@ div#comment_widget{
 
   .comment{
     position: relative;
-    &.hightlight{
+    &.highlight{
       background-color: #ffffaa;
     }
     .user_avatar{
@@ -61,6 +61,15 @@ div#comment_widget{
         color: #0058b8;
       }
       float: right;
+    }
+
+    &.comment_highlight{
+      .reply_button{
+        color: #0058b8;
+        &:active{
+          color: #0058b8;
+        }
+      }
     }
   }
 }

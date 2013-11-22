@@ -66,7 +66,7 @@ var IPython = (function (IPython) {
         this.element.on('click', '.reply_button', $.proxy(this.reply_comment, this));
         this.element.on('click', '#comment_button', $.proxy(this.comment, this));
         this.element.on('click', '#comment_reply_to', $.proxy(this.remove_reply_head, this));
-        this.element.on('click', '.comment_reply', $.proxy(this.comment_hightlight_parent, this));
+        this.element.on('click', '.comment_reply', $.proxy(this.comment_highlight_parent, this));
         this.comment_textarea.on('keydown', $.proxy(this.comment_submit, this));
     };
 
@@ -78,18 +78,18 @@ var IPython = (function (IPython) {
 
     };
 
-    CommentWidget.prototype.comment_hightlight_parent = function(event){
+    CommentWidget.prototype.comment_highlight_parent = function(event){
         var comment = $(event.currentTarget).closest('.comment');
         var comment_obj = comment.data('comment');
         var comment_parent = $("#comment"+ comment_obj.parent_comment_id);
-        $('.comment').removeClass("hightlight");
-        comment_parent.addClass("hightlight");
+        $('.comment').removeClass("highlight");
+        comment_parent.addClass("highlight");
     };
 
 
     CommentWidget.prototype.reset = function(event){
         this.comment_list.empty();
-        if(this.reply_head)this.reply_head.remove();
+        this.remove_reply_head();
         this.comment_textarea.val('');
     };
 
@@ -118,6 +118,10 @@ var IPython = (function (IPython) {
 
     CommentWidget.prototype.reply_comment = function(event){
         var comment = $(event.currentTarget).closest('.comment');
+
+        $('.comment').removeClass("comment_highlight");
+        comment.addClass("comment_highlight");
+
         var comment_obj = comment.data('comment');
         var reply_head_html  = this.reply_head_template({name: comment_obj.username});
         this.remove_reply_head();
