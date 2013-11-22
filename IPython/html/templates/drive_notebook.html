@@ -184,19 +184,33 @@ class="notebook_app"
 </div>
 </div>
 
-<div id="ipython-main-app">
-
-    <div id="notebook_panel">
+<div id="ipython-main-app" class="container">
+    <div id="notebook_wrapper"class="row">
+      <div id="notebook_panel" class="span9">
         <div id="notebook"></div>
         <div id="pager_splitter"></div>
         <div id="pager">
-            <div id='pager_button_area'>
-            </div>
-            <div id="pager-container" class="container"></div>
+          <div id='pager_button_area'>
+          </div>
+          <div id="pager-container"></div>
         </div>
+      </div>
+      <div id="sidebar_panel" class="span3">
+        <div id="cell_info_wrapper">
+
+        </div>
+        <div id="comment_widget">
+          <div id="comment_list">
+          </div>
+          <div id="comment_input_area">
+              <textarea id="comment_textarea" rows="3"></textarea>
+              <button id="comment_button" class="btn btn-primary">Comment</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-</div>
+  </div>
 <div id='tooltip' class='ipython_tooltip' style='display:none'></div>
 
 
@@ -254,9 +268,11 @@ class="notebook_app"
 <script src="{{ static_url("notebook/js/notebook.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/notificationwidget.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/notificationarea.js") }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url("notebook/js/commentwidget.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/tooltip.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/config.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/main.js") }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url("notebook/js/firebase.js") }}" type="text/javascript" charset="utf-8"></script>
 
 <script src="{{ static_url("notebook/js/contexthint.js") }}" charset="utf-8"></script>
 
