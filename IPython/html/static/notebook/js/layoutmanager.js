@@ -43,6 +43,7 @@ var IPython = (function (IPython) {
         var app_height = this.app_height();  // content height
 
         $('#ipython-main-app').height(app_height);  // content+padding+border height
+        $('#sidebar_panel').height(app_height);
 
         var pager_height = IPython.pager.percentage_height*app_height;
         var pager_splitter_height = $('div#pager_splitter').outerHeight(true);
