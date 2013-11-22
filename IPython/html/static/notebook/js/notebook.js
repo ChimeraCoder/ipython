@@ -616,7 +616,7 @@ var IPython = (function (IPython) {
 
     Notebook.prototype.get_cell_by_id = function(target_id){
         var cells = this.get_cells();
-        for(i = 0; i < cells; i++){
+        for(var i = 0; i < cells; i++){
             if(cells[i].get_id() === target_id){
                 return cell
             }
