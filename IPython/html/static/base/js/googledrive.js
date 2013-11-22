@@ -85,10 +85,7 @@ var IPython = (function (IPython) {
         gapi.client.load('oauth2','v2', function(){
             var request = gapi.client.oauth2.userinfo.get();
             request.execute(function(resp) {
-                that.userId = resp.id;
-                that.displayName = resp.name;
-                console.log('Retrieved profile for:' + that.userId);
-                console.log('Retrieved profile for:' + that.displayName);
+                that.user_info = resp;
             });
         });
     }

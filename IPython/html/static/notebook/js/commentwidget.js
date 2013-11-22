@@ -44,7 +44,7 @@ var IPython = (function (IPython) {
                 '  <div class="user_avatar" style="background-image:url(https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&amp;s=60);"></div>' +
                 '  <div class="content">' +
                 '    <div class="comment_title">' +
-                '      <span class="user_name">' + data.username + '</span><span class="comment_time">' + data.time + '</span>' +
+                '      <span class="user_name">' + data.username + '</span><span class="comment_time">' + new Date(data.time).format("yyyy-mm-dd hh:MM:ss TT") + '</span>' +
                 '      <span class="reply_button"><i class="icon-reply"></i> reply</span>' +
                 '    </div>' +
                 '    <div class="comment_text">';
@@ -88,10 +88,10 @@ var IPython = (function (IPython) {
         var text = this.comment_textarea.val();
         if(text!==""){
 
-
+            var user_info = IPython.google_drive.user_info;
             var data = {
-                username: IPython.google_drive.displayName,
-                user_id: IPython.google_drive.userId,
+                username: user_info.name,
+                user_id: user_info.id,
                 cell_id: IPython.notebook.get_selected_cell().get_id(),
                 text: text,
                 time: Date.now()
