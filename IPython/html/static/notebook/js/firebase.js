@@ -22,11 +22,19 @@ var IPython = (function (IPython) {
         var that = this;
         console.log("initializing firebase");
 
-        var cells = IPython.notebook.get_cells();
-        $.each(cells, function(index, cell){
-            var cellId = cell.get_id();
-            that.initCellComments(cellId);
-        });
+        var initAllCells = function(){
+            var cells = IPython.notebook.get_cells();
+            $.each(cells, function(index, cell){
+                var cellId = cell.get_id();
+                that.initCellComments(cellId);
+            });
+        }
+
+        if(IPython.notebook.session === null){
+            $([IPython.events]).on('notebook_loaded.Notebook', initAllCells)
+        } else{
+            initAllCells()
+        }
     }
 
     Fbase.prototype.initCellComments = function(cellId){
