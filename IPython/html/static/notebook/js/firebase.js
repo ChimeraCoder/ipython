@@ -45,7 +45,7 @@ var IPython = (function (IPython) {
         cellCommentsDataRef.on('child_added', function(snapshot){
             var comment = snapshot.val();
             console.log(comment);
-            that.displayComment(comment);
+            that.updateCellComments(comment);
         });
     }
 
@@ -63,14 +63,21 @@ var IPython = (function (IPython) {
     }
 
 
-    Fbase.prototype.displayComment = function(comment){
+    Fbase.prototype.updateCellComments = function(comment){
         var parentCellId = comment.parentCellId;
         var username = comment.username;
         var text = comment.text;
         var parentCell = IPython.notebook.get_cell_by_id(parentCellId);
-        IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
-        // TODO add the comment to the parent cell
-        console.log("Displaying message for " + parentCellId + " " + username + " " + text);
+
+        if (!parentCell.hasOwnProperty("comments")){
+            parentCell.comments = [];
+        }
+        parentCell.comments.push(comment);
+
+        //If the current cell is selected, append it to the widget
+        if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
+            IPython.comment_widget.insert_comment({username: username, time:Date.now(), text: text});
+        }
     }
 
     IPython.Fbase = Fbase;
