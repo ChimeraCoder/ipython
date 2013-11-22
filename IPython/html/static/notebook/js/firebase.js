@@ -20,13 +20,13 @@ var IPython = (function (IPython) {
         this.myDataRef = new Firebase(this.baseURI);
 
         var that = this;
-        $([IPython.events]).on('notebook_loaded.Notebook', function(){
-            var cells = IPython.notebook.get_cells();
-            $.each(cell, function(){
-                var cellId = cell.id;
-                that.initCellComments(cellId);
-            });
-        })
+        console.log("initializing firebase");
+
+        var cells = IPython.notebook.get_cells();
+        $.each(cells, function(index, cell){
+            var cellId = cell.get_id();
+            that.initCellComments(cellId);
+        });
     }
 
     Fbase.prototype.initCellComments = function(cellId){
