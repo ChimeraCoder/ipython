@@ -43,7 +43,7 @@ function (marked) {
 
     IPython.mathjaxutils.init();
 
-    $('#ipython-main-app').addClass('border-box-sizing');
+    //$('#ipython-main-app').addClass('border-box-sizing');
     $('div#notebook_panel').addClass('border-box-sizing');
 
     var baseProjectUrl = $('body').data('baseProjectUrl');
