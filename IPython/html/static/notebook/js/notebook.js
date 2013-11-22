@@ -54,7 +54,7 @@ var IPython = (function (IPython) {
         this.notebook_name_blacklist_re = /[\/\\:]/;
         this.nbformat = 3 // Increment this when changing the nbformat
         this.nbformat_minor = 0 // Increment this when changing the nbformat
-        this.sidebar_shown = false;
+        this.sidebar_shown = true;
         this.style();
         this.create_elements();
         this.bind_events();
@@ -2342,12 +2342,12 @@ var IPython = (function (IPython) {
 
     Notebook.prototype.show_sidebar_panel = function(){
         $('#sidebar_panel').show();
-        $('#notebook_panel').addClass("span9");
+        $('#notebook_panel').removeClass("span12").addClass("span9");
     }
 
     Notebook.prototype.hide_sidebar_panel = function(){
         $('#sidebar_panel').hide();
-        $('#notebook_panel').removeClass("span9");
+        $('#notebook_panel').removeClass("span9").addClass("span12");
     }
 
 

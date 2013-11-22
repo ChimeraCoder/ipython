@@ -41,10 +41,10 @@ var IPython = (function (IPython) {
     CommentWidget.prototype.load_templates = function() {
         this.comment_cell_template = function(data){
             var html = '<div class="comment" id="comment'+data.comment_id+'">' +
-                '  <div class="user_avatar" style="background-image:url(https://1.gravatar.com/avatar/41103dac372810b9ea1784a2cc896cab?r=x&amp;s=60);"></div>' +
+                '  <div class="user_avatar" style="background-image:url(https://www.gravatar.com/avatar/'+data.user_id+'?d=identicon&amp;s=60);"></div>' +
                 '  <div class="content">' +
                 '    <div class="comment_title">' +
-                '      <span class="user_name">' + data.username + '</span><span class="comment_time">' + new Date(data.time).format("yyyy-mm-dd hh:MM:ss TT") + '</span>' +
+                '      <span class="user_name">' + data.username + '</span><span class="comment_time">' + new Date(data.time).format("yyyy-mm-dd hh:MM TT") + '</span>' +
                 '      <span class="reply_button"><i class="icon-reply"></i> reply</span>' +
                 '    </div>' +
                 '    <div class="comment_text">';
@@ -58,7 +58,7 @@ var IPython = (function (IPython) {
             return html;
         };
         this.reply_head_template = function(data){
-            return '<div id="comment_reply_to" class="label label-primary"><i class="remove-mark icon-remove"></i> '+data.name+'</div>';
+            return '<div id="comment_reply_to" class="label label-info"><i class="remove-mark icon-remove"></i> '+data.name+'</div>';
         };
     }
 
@@ -67,6 +67,15 @@ var IPython = (function (IPython) {
         this.element.on('click', '#comment_button', $.proxy(this.comment, this));
         this.element.on('click', '#comment_reply_to', $.proxy(this.remove_reply_head, this));
         this.element.on('click', '.comment_reply', $.proxy(this.comment_hightlight_parent, this));
+        this.comment_textarea.on('keydown', $.proxy(this.comment_submit, this));
+    };
+
+    CommentWidget.prototype.comment_submit = function(e){
+        if ((e.keyCode == 10 || e.keyCode == 13) && (e.ctrlKey || e.metaKey)){
+            this.comment(e);
+            return false;
+        }
+
     };
 
     CommentWidget.prototype.comment_hightlight_parent = function(event){
@@ -75,7 +84,7 @@ var IPython = (function (IPython) {
         var comment_parent = $("#comment"+ comment_obj.parent_comment_id);
         $('.comment').removeClass("hightlight");
         comment_parent.addClass("hightlight");
-    }
+    };
 
 
     CommentWidget.prototype.reset = function(event){
@@ -117,7 +126,8 @@ var IPython = (function (IPython) {
         this.reply_head.data('parent_comment', comment_obj);
         this.reply_head.appendTo(this.comment_input_area);
 
-        this.comment_textarea.css('text-indent', this.reply_head.outerWidth());
+        this.comment_textarea.css('text-indent', this.reply_head.outerWidth()+2);
+        this.comment_textarea.focus();
     }
 
     CommentWidget.prototype.remove_reply_head = function(){

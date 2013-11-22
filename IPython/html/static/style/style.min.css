@@ -1478,9 +1478,9 @@ div#comment_widget .comment .content .comment_title .comment_time{text-transform
 div#comment_widget .comment .content .comment_title .comment_text{color:#222222;}
 div#comment_widget .comment .reply_button{font-size:12px;color:#999;color:#aaaaaa;cursor:pointer;float:right;}div#comment_widget .comment .reply_button:hover{color:#007aff;}
 div#comment_widget .comment .reply_button:active{color:#0058b8;}
-div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;cursor:pointer;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
+div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;cursor:pointer;height:20px;line-height:20px;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
 div#comment_input_area #comment_reply_to:hover .remove-mark:before{content:"\f00d";}
-div#comment_input_area #comment_textarea{width:275px;line-height:22px;overflow:hidden;}
+div#comment_input_area #comment_textarea{height:150px;width:275px;max-width:275px;line-height:22px;overflow:hidden;}
 .completions{position:absolute;z-index:10;overflow:hidden;border:1px solid #ababab;border-radius:4px;-webkit-box-shadow:0px 6px 10px -1px #adadad;-moz-box-shadow:0px 6px 10px -1px #adadad;box-shadow:0px 6px 10px -1px #adadad;}
 .completions select{background:white;outline:none;border:none;padding:0px;margin:0px;overflow:auto;font-family:monospace;font-size:110%;color:#000000;}
 .completions select option.context{color:#0064cd;}
