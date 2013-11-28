@@ -82,6 +82,28 @@ var IPython = (function (IPython) {
         }
     }
 
+
+    Fbase.prototype.submitQuiz= function(quiz_obj){
+        // Separate the attributes for now to be explicit
+        var cellId = quiz_obj.cell_id;
+        var userId = quiz_obj.userId;
+        var quizId = cellId; // Re-assign this explicitly for now to be explicit
+
+        // Partition the quizzes by user id so that Firebase can handle permissions separately
+        var url = this.baseURI + '/quizzes/' + quizId + "/" + userId + "/submissions/"; 
+        var quizSubmissionsRef = new Firebase(url);
+
+        // Generate a reference to a new location with push
+        var newPushRef = quizSubmissionRef.push();
+
+        newPushRef.set(quiz_obj);
+
+        console.log(newPushRef.name());
+    }
+
+
+
+
     IPython.Fbase = Fbase;
     return IPython
 
