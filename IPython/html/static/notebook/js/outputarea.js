@@ -291,6 +291,10 @@ var IPython = (function (IPython) {
         // If dynamic is true, javascript output will be eval'd.
         this.expand();
 
+        if(json.text instanceof Array){
+            json.text = json.text.join("");
+        }
+
         // Clear the output if clear is queued.
         var needs_height_reset = false;
         if (this.clear_queued) {
