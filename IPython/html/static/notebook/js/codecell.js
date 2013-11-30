@@ -436,9 +436,6 @@ var IPython = (function (IPython) {
             } else {
                 this.set_input_prompt();
             }
-            if (data.outputs instanceof Array){
-                    data.outputs = data.outputs.join("\n");
-            }
             this.output_area.fromJSON(data.outputs);
             if (data.collapsed !== undefined) {
                 if (data.collapsed) {
