@@ -45,7 +45,7 @@ var IPython = (function (IPython) {
 
     GoogleDrive.prototype.check_auth = function() {
         gapi.auth.authorize(
-            {'client_id': this.client_id, 'scope': this.scopes.join(' '), 'immediate': true},
+            {'client_id': this.client_id, 'scope': this.scopes, 'immediate': true},
             $.proxy(this.handle_auth_result,this));
     }
 
@@ -77,6 +77,25 @@ var IPython = (function (IPython) {
         gapi.auth.authorize(
                 {'client_id': this.client_id, 'scope': this.scopes, 'immediate': false},
                 $.proxy(this.handle_auth_result,this));
+    }
+
+    GoogleDrive.prototype.revoke = function () {
+        gapi.auth.signOut();
+        var token = gapi.auth.getToken();
+        var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + token.access_token;
+        var that = this;
+        $.ajax({
+            type: 'GET',
+            url: revokeUrl,
+            async: false,
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(nullResponse) {
+                that.check_auth();
+            },
+            error: function(e) {
+            }
+        });
     }
 
 

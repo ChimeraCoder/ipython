@@ -45,9 +45,10 @@ var IPython = (function (IPython) {
     DriveNotebookList.prototype.bind_events = function () {
         var that = this;
         $('#drive_refresh_notebook_list').click($.proxy(this.load_drive_list, this));
-        $([IPython.events]).on('authorization_required.GoogleDrive', $.proxy(this.show_authorize_drive_button, this));
-        $([IPython.events]).on('authorization_complete.GoogleDrive', $.proxy(this.hide_authorize_drive_button, this));
-        $('#drive_authorize').click($.proxy(this.authorize_drive, this))
+        $([IPython.events]).on('authorization_required.GoogleDrive', $.proxy(this.handle_authorization_required, this));
+        $([IPython.events]).on('authorization_complete.GoogleDrive', $.proxy(this.handle_authorization_complete, this));
+        $('#drive_authorize').click($.proxy(this.authorize_drive, this));
+        $('#drive_revoke').click($.proxy(this.revoke_drive, this));
         this.element.bind('dragover', function () {
             return false;
         });
@@ -58,16 +59,23 @@ var IPython = (function (IPython) {
     };
 
 
-    DriveNotebookList.prototype.show_authorize_drive_button = function () {
+    DriveNotebookList.prototype.handle_authorization_required = function () {
         $('#drive_authorize').removeClass('hide');
+        $('#drive_revoke').addClass('hide');
+        this.clear_list();
     }
 
-    DriveNotebookList.prototype.hide_authorize_drive_button = function () {
+    DriveNotebookList.prototype.handle_authorization_complete = function () {
         $('#drive_authorize').addClass('hide');
+        $('#drive_revoke').removeClass('hide');
     }
 
     DriveNotebookList.prototype.authorize_drive = function () {
         IPython.google_drive.authorize();
+    }
+
+    DriveNotebookList.prototype.revoke_drive = function () {
+        IPython.google_drive.revoke();
     }
 
     DriveNotebookList.prototype.handelFilesUpload =  function(event, dropOrForm) {
