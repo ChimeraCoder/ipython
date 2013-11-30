@@ -108,19 +108,16 @@ var IPython = (function (IPython) {
             if(this.reply_head){
                 var comment_obj = this.reply_head.data('parent_comment');
                 data.parent_comment_id = comment_obj.comment_id;
-                //data.text = "Reply to " + comment_obj.username + " "+ text;
             }
             IPython.firebase.submitComment(data);
             this.comment_textarea.val('');
+            this.remove_reply_head();
         }
 
     }
 
     CommentWidget.prototype.reply_comment = function(event){
         var comment = $(event.currentTarget).closest('.comment');
-
-        $('.comment').removeClass("comment_highlight");
-        comment.addClass("comment_highlight");
 
         var comment_obj = comment.data('comment');
         var reply_head_html  = this.reply_head_template({name: comment_obj.username});
@@ -129,7 +126,8 @@ var IPython = (function (IPython) {
         this.reply_head = $(reply_head_html);
         this.reply_head.data('parent_comment', comment_obj);
         this.reply_head.appendTo(this.comment_input_area);
-
+        $('.comment').removeClass("comment_highlight");
+        comment.addClass("comment_highlight");
         this.comment_textarea.css('text-indent', this.reply_head.outerWidth()+2);
         this.comment_textarea.focus();
     }
@@ -138,6 +136,7 @@ var IPython = (function (IPython) {
         if(this.reply_head !== null){
             this.reply_head.remove();
             this.reply_head = null;
+            $('.comment').removeClass("comment_highlight");
         }
         this.comment_textarea.css('text-indent', 0);
     }
