@@ -49,7 +49,6 @@ var IPython = (function (IPython) {
             this.element.data("cell", this);
             this.bind_events();
         }
-        //this.cell_id = utils.uuid();
         this._options = options;
     };
 
@@ -96,21 +95,29 @@ var IPython = (function (IPython) {
     Cell.prototype.bind_events = function () {
         var that = this;
         // We trigger events so that Cell doesn't have to depend on Notebook.
-        that.element.click(function (event) {
+        that.element.mouseup(function (event) {
             if (that.selected === false) {
                 $([IPython.events]).trigger('select.Cell', {'cell':that});
             }
         });
-        that.element.focusin(function (event) {
-            if (that.selected === false) {
-                $([IPython.events]).trigger('select.Cell', {'cell':that});
-            }
-        });
+//        that.element.focusin(function (event) {
+//            if (that.selected === false) {
+//                $([IPython.events]).trigger('select.Cell', {'cell':that});
+//            }
+//        });
         if (this.code_mirror) {
             this.code_mirror.on("change", function(cm, change) {
                 $([IPython.events]).trigger("set_dirty.Notebook", {value: true});
             });
         }
+        that.element.attr('draggable', 'true');
+        that.element.on('dragstart', function(e){
+            e.stopPropagation();
+            var oe = e.originalEvent;
+            oe.dataTransfer.effectAllowed = 'copy';
+            IPython.notebook.current_dragging_cell = that;
+            //oe.dataTransfer.setData('application/json', that);
+        });
     };
 
     /**

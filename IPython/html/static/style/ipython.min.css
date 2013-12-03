@@ -55,7 +55,7 @@ input.engine_num_input{height:20px;margin-bottom:2px;padding-top:0;padding-botto
 .ansibgpurple{background-color:magenta;}
 .ansibgcyan{background-color:cyan;}
 .ansibggray{background-color:gray;}
-div.cell{border:1px solid transparent;padding:5px 5px 5px 0px;margin:2px 0px 2px 7px;outline:none;}div.cell.selected{border-radius:4px;border:thin #ababab solid;}
+div.cell{border-radius:4px;border:1px solid #f5f5f5;background-color:#fff;padding:5px 5px 5px 0px;margin:2px 0px 2px 7px;outline:none;}div.cell.selected{border:thin solid #ababab;}
 div.prompt{width:11ex;padding:0.4em;margin:0px;font-family:monospace;text-align:right;line-height:1.231em;}
 .celltoolbar{border:thin solid #CFCFCF;border-bottom:none;background:#EEE;border-top-right-radius:3px;border-top-left-radius:3px;width:100%;-webkit-box-pack:end;height:22px;}
 .no_input_radius{border-top-right-radius:0px;border-top-left-radius:0px;}
@@ -95,12 +95,18 @@ div#comment_widget .comment .user_avatar{position:absolute;left:5px;top:5px;widt
 div#comment_widget .comment .content{margin-left:40px;padding:5px 5px 5px 0px;border-bottom:1px solid #ebebeb;}div#comment_widget .comment .content .comment_title{font-size:12px;line-height:15px;}div#comment_widget .comment .content .comment_title .user_name{color:#7a7a7a;}
 div#comment_widget .comment .content .comment_title .comment_time{text-transform:uppercase;color:#aaaaaa;font-size:10px;}div#comment_widget .comment .content .comment_title .comment_time:before{content:'・';}
 div#comment_widget .comment .content .comment_title .comment_text{color:#222222;}
-div#comment_widget .comment .reply_button{font-size:12px;color:#999;color:#aaaaaa;cursor:pointer;float:right;}div#comment_widget .comment .reply_button:hover{color:#007aff;}
+div#comment_widget .comment .reply_button{visibility:hidden;font-size:12px;color:#999;color:#aaaaaa;cursor:pointer;float:right;}div#comment_widget .comment .reply_button:hover{color:#007aff;}
 div#comment_widget .comment .reply_button:active{color:#0058b8;}
-div#comment_widget .comment.comment_highlight .reply_button{color:#0058b8;}div#comment_widget .comment.comment_highlight .reply_button:active{color:#0058b8;}
+div#comment_widget .comment .comment_attachment_list{margin-top:10px;}div#comment_widget .comment .comment_attachment_list .comment_attachment_cell{display:block;background-color:#58c0ee;margin-bottom:5px;cursor:pointer;}
+div#comment_widget .comment:hover .reply_button{visibility:visible;}
+div#comment_widget .comment.comment_highlight .reply_button{visibility:visible;color:#0058b8;}div#comment_widget .comment.comment_highlight .reply_button:active{color:#0058b8;}
 div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;cursor:pointer;height:20px;line-height:20px;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
 div#comment_input_area #comment_reply_to:hover .remove-mark:before{content:"\f00d";}
 div#comment_input_area #comment_textarea{height:150px;width:275px;max-width:275px;line-height:22px;overflow:hidden;}
+div#comment_input_area #comment_attachment_area{padding-bottom:30px;margin-bottom:10px;}div#comment_input_area #comment_attachment_area.dragover{border:1px dashed #4b4b4b;}
+div#comment_input_area #comment_attachment_area .attachment_cell{display:block;margin-bottom:10px;height:20px;line-height:20px;font-size:14px;background-color:#58c0ee;}div#comment_input_area #comment_attachment_area .attachment_cell .remove-mark{display:block;float:right;line-height:20px;visibility:hidden;cursor:pointer;}
+div#comment_input_area #comment_attachment_area .attachment_cell:hover .remove-mark{visibility:visible;}
+#attachment_cell_modal{width:760px;margin-left:-380px;}
 @media (min-width:768px) and (max-width:979px){div#sidebar_panel{width:240px;} #comment_textarea{width:217px;max-width:217px;}}.completions{position:absolute;z-index:10;overflow:hidden;border:1px solid #ababab;border-radius:4px;-webkit-box-shadow:0px 6px 10px -1px #adadad;-moz-box-shadow:0px 6px 10px -1px #adadad;box-shadow:0px 6px 10px -1px #adadad;}
 .completions select{background:white;outline:none;border:none;padding:0px;margin:0px;overflow:auto;font-family:monospace;font-size:110%;color:#000000;}
 .completions select option.context{color:#0064cd;}
