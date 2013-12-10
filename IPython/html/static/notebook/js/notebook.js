@@ -28,6 +28,7 @@ var IPython = (function (IPython) {
         this._baseProjectUrl = options.baseProjectUrl;
         this.notebook_path = options.notebookPath;
         this.notebook_name = options.notebookName;
+        this.drive_file_id = null;
         this.element = $(selector);
         this.element.scroll();
         this.element.data("notebook", this);
@@ -1696,28 +1697,45 @@ var IPython = (function (IPython) {
         // time the ajax call for autosave tuning purposes.
         var start =  new Date().getTime();
         // We do the call with settings so we can set cache to false.
-        var settings = {
-            processData : false,
-            cache : false,
-            type : "PUT",
-            data : JSON.stringify(model),
-            headers : {'Content-Type': 'application/json'},
-            success : $.proxy(this.save_notebook_success, this, start),
-            error : $.proxy(this.save_notebook_error, this)
-        };
-        if (extra_settings) {
-            for (var key in extra_settings) {
-                settings[key] = extra_settings[key];
+
+        if(this.drive_file_id!==null){
+            var request = gapi.client.request({
+                'path': '/upload/drive/v2/files/' + this.drive_file_id,
+                'method': 'PUT',
+                'params': {'uploadType': 'media'},
+                'headers': {
+                    'Content-Type': 'application/json'
+                },
+                'body': JSON.stringify(model.content)
+            });
+            $([IPython.events]).trigger('notebook_saving.Notebook');
+            request.execute($.proxy(this.save_notebook_success, this, start));
+        }else{
+            var settings = {
+                processData : false,
+                cache : false,
+                type : "PUT",
+                data : JSON.stringify(model),
+                headers : {'Content-Type': 'application/json'},
+                success : $.proxy(this.save_notebook_success, this, start),
+                error : $.proxy(this.save_notebook_error, this)
+            };
+            if (extra_settings) {
+                for (var key in extra_settings) {
+                    settings[key] = extra_settings[key];
+                }
             }
+            $([IPython.events]).trigger('notebook_saving.Notebook');
+            var url = utils.url_path_join(
+                this.baseProjectUrl(),
+                'api/notebooks',
+                this.notebookPath(),
+                this.notebook_name
+            );
+            $.ajax(url, settings);
         }
-        $([IPython.events]).trigger('notebook_saving.Notebook');
-        var url = utils.url_path_join(
-            this.baseProjectUrl(),
-            'api/notebooks',
-            this.notebookPath(),
-            this.notebook_name
-        );
-        $.ajax(url, settings);
+
+
     };
     
     /**
@@ -1928,6 +1946,7 @@ var IPython = (function (IPython) {
      */
      Notebook.prototype.load_drive_notebook = function (drive_file_id) {
          var that = this;
+         this.drive_file_id = drive_file_id;
          IPython.google_drive.wait_for_drive_api(function () {
              var request = gapi.client.drive.files.get({
                  'fileId': drive_file_id
