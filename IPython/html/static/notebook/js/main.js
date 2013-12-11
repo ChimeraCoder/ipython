@@ -93,7 +93,11 @@ function (marked) {
             document.location.hash = '';
             document.location.hash = hash;
         }
-        IPython.notebook.set_autosave_interval(IPython.notebook.minimum_autosave_interval);
+        if (driveFileId) {
+            IPython.notebook.set_autosave_interval(null);
+        } else {
+            IPython.notebook.set_autosave_interval(IPython.notebook.minimum_autosave_interval);
+        }
         // only do this once
         $([IPython.events]).off('notebook_loaded.Notebook', first_load);
     };
