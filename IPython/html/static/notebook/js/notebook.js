@@ -29,6 +29,7 @@ var IPython = (function (IPython) {
         this.notebook_path = options.notebookPath;
         this.notebook_name = options.notebookName;
         this.drive_file_id = null;
+        this.drive_file_metadata = null;
         this.element = $(selector);
         this.element.scroll();
         this.element.data("notebook", this);
@@ -1962,6 +1963,7 @@ var IPython = (function (IPython) {
      * @param {File} file Drive file to download
      */
     Notebook.prototype.download_notebook_from_drive = function(file){
+        this.drive_file_metadata = file;
         console.log("Started Downloading");
         var accessToken = gapi.auth.getToken().access_token;
         var settings = {
@@ -1976,6 +1978,17 @@ var IPython = (function (IPython) {
         $([IPython.events]).trigger('notebook_loading.Notebook');
         $.ajax(file.downloadUrl, settings);
     }
+
+    /**
+     * Check if the notebook can be modified by the current user.
+     *
+     * @method isAuthor
+     */
+    Notebook.prototype.isAuthor = function(){
+        var role = this.drive_file_metadata.userPermission.role;
+        return role==="owner"||role==="writer";
+    }
+
 
     /**
      * Success callback for loading a notebook from Google Drive.
