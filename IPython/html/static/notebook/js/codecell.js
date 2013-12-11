@@ -82,6 +82,10 @@ var IPython = (function (IPython) {
         );
     };
 
+
+
+
+
     CodeCell.options_default = {
         cm_config : {
             extraKeys: {
@@ -265,12 +269,37 @@ var IPython = (function (IPython) {
                 }
             },
             iopub : {
-                output : $.proxy(this.output_area.handle_output, this.output_area),
+                output : $.proxy(this.handle_output, this),
                 clear_output : $.proxy(this.output_area.handle_clear_output, this.output_area),
             },
             input : $.proxy(this._handle_input_request, this)
         };
     };
+
+
+    CodeCell.prototype.handle_output = function(message){
+        if(this.isQuiz() && !IPython.notebook.isAuthor()){
+            if(message.msg_type === "pyout"){
+                this.quiz_button.removeClass("btn-success");
+                this.quiz_button.removeClass("btn-warning");
+                this.quiz_button.removeClass("btn-danger");
+                if(message.content.data["text/plain"] == "True"){
+                    // The test passes
+                    this.quiz_button.addClass("btn-success")
+                } else {
+                    // The test fails
+                    this.quiz_button.addClass("btn-warning")
+                }
+            } else if(message.msg_type === "pyerr"){
+                this.quiz_button.addClass("btn-danger")
+            } else {
+                this.quiz_button.addClass("btn-danger")
+            } 
+        } else {
+                this.output_area.handle_output(message)
+        }
+    }
+
     
     CodeCell.prototype._open_with_pager = function (payload) {
         $([IPython.events]).trigger('open_with_text.Pager', payload);
@@ -420,6 +449,23 @@ var IPython = (function (IPython) {
 
     CodeCell.prototype.fromJSON = function (data) {
         IPython.Cell.prototype.fromJSON.apply(this, arguments);
+        // If the cell is a quiz cell, it should not be rendered
+        if (data.metadata.isQuiz === true){
+            // Check if the user is the owner of the file
+            // If so, render the element differently
+            if(!IPython.notebook.isAuthor()){
+            // TODO don't hide it
+                this.element.empty();
+                var btn = $('<button class="btn">Run Test</button>');
+                var that = this;
+                btn.click(function(event){
+                    that.execute(data.input, that.get_callbacks(), {silent: false, store_history: true});
+                })
+                this.quiz_button = btn;
+                this.element.append(btn);
+                //$(this.element).hide();
+            }
+        }
         if (data.cell_type === 'code') {
             if (data.input !== undefined) {
                 if (data.input instanceof Array){
@@ -462,6 +508,10 @@ var IPython = (function (IPython) {
         return data;
     };
 
+
+    CodeCell.prototype.isQuiz = function(){
+        return this.metadata.isQuiz;
+    }
 
     IPython.CodeCell = CodeCell;
 
