@@ -565,6 +565,24 @@ var IPython = (function (IPython) {
         return result;
     }
     
+
+    Notebook.prototype.get_prev_code_cell = function(cell){
+        var result = null;
+        var current = cell;
+        var previous = current; 
+        while(previous !== null){
+            previous = IPython.notebook.get_prev_cell(current);
+            if (previous.cell_type == "code"){
+                return previous
+            } else{
+                current = previous;
+            }
+        }
+        return null
+    }
+
+
+
     /**
      * Get the numeric index of a given cell.
      * 
