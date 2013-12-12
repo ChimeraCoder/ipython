@@ -83,10 +83,12 @@ var IPython = (function (IPython) {
     }
 
 
-    Fbase.prototype.submitQuiz= function(quiz_obj){
+    Fbase.prototype.submitQuiz= function(quiz_entry){
         // Separate the attributes for now to be explicit
-        var cellId = quiz_obj.cell_id;
-        var userId = quiz_obj.userId;
+        var cellId = cell.get_id();
+        var text = cell.get_text();
+        var user = IPython.google_drive.user_info;
+        var userId = user.id;
         var quizId = cellId; // Re-assign this explicitly for now to be explicit
 
         // Partition the quizzes by user id so that Firebase can handle permissions separately

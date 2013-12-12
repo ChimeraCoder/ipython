@@ -280,20 +280,20 @@ var IPython = (function (IPython) {
     CodeCell.prototype.handle_output = function(message){
         if(this.isQuiz() && !IPython.notebook.isAuthor()){
             if(message.msg_type === "pyout"){
-                this.quiz_button.removeClass("btn-success");
-                this.quiz_button.removeClass("btn-warning");
-                this.quiz_button.removeClass("btn-danger");
+                this.run_quiz_tests_btn.removeClass("btn-success");
+                this.run_quiz_tests_btn.removeClass("btn-warning");
+                this.run_quiz_tests_btn.removeClass("btn-danger");
                 if(message.content.data["text/plain"] == "True"){
                     // The test passes
-                    this.quiz_button.addClass("btn-success")
+                    this.run_quiz_tests_btn.addClass("btn-success")
                 } else {
                     // The test fails
-                    this.quiz_button.addClass("btn-warning")
+                    this.run_quiz_tests_btn.addClass("btn-warning")
                 }
             } else if(message.msg_type === "pyerr"){
-                this.quiz_button.addClass("btn-danger")
+                this.run_quiz_tests_btn.addClass("btn-danger")
             } else {
-                this.quiz_button.addClass("btn-danger")
+                this.run_quiz_tests_btn.addClass("btn-danger")
             } 
         } else {
                 this.output_area.handle_output(message)
@@ -456,14 +456,22 @@ var IPython = (function (IPython) {
             if(!IPython.notebook.isAuthor()){
             // TODO don't hide it
                 this.element.empty();
-                var btn = $('<button class="btn">Run Test</button>');
+                this.run_quiz_tests_btn = $('<button class="btn">Run Test</button>');
+                this.submit_quiz_tests_btn = $('<button class="btn">Submit Test</button>');
                 var that = this;
-                btn.click(function(event){
+                this.run_quiz_tests_btn.click(function(event){
                     that.execute(data.input, that.get_callbacks(), {silent: false, store_history: true});
                 })
-                this.quiz_button = btn;
-                this.element.append(btn);
-                //$(this.element).hide();
+
+                this.submit_quiz_tests_btn.click(function(event){
+                    //Get the actual submission content
+                    var quiz_entry = IPython.notebook.get_prev_cell(that);
+                    //Post to Firebase
+                    IPython.Fbase.submitQuiz(quiz_entry)
+                })
+
+                this.element.append(this.run_quiz_tests_btn);
+                this.element.append(this.submit_quiz_tests_btn);
             }
         }
         if (data.cell_type === 'code') {
