@@ -6,3 +6,6 @@ a hack to deal with our current css styles and no new styling should be added in
     position: relative;
     font-size: 110%;
 }
+.button_container{
+    padding-right: 5px;
+}
