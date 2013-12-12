@@ -451,6 +451,10 @@ var IPython = (function (IPython) {
         IPython.Cell.prototype.fromJSON.apply(this, arguments);
         // If the cell is a quiz cell, it should not be rendered
         if (data.metadata.isQuiz === true){
+	    //make the cell not draggable
+	    this.element.removeAttr('draggable');
+	    this.element.off('dragstart');
+
             // Check if the user is the owner of the file
             // If so, render the element differently
             if(!IPython.notebook.isAuthor()){
@@ -459,7 +463,8 @@ var IPython = (function (IPython) {
                 this.run_quiz_tests_btn = $('<button class="btn">Run Test</button>');
                 this.submit_quiz_tests_btn = $('<button class="btn">Submit Test</button>');
                 var that = this;
-                this.run_quiz_tests_btn.click(function(event){
+                this.run_quiz_tests_btn.mouseup(function(event){
+                    event.stopPropagation();
                     that.execute(data.input, that.get_callbacks(), {silent: false, store_history: true});
                 })
 
