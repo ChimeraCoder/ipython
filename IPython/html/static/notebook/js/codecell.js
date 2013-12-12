@@ -467,7 +467,7 @@ var IPython = (function (IPython) {
                     //Get the actual submission content
                     var quiz_entry = IPython.notebook.get_prev_cell(that);
                     //Post to Firebase
-                    IPython.Fbase.submitQuiz(quiz_entry)
+                    IPython.firebase.submitQuiz(quiz_entry, that)
                 })
 
                 this.element.append(this.run_quiz_tests_btn);

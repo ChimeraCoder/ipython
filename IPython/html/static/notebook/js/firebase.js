@@ -83,28 +83,15 @@ var IPython = (function (IPython) {
     }
 
 
-    Fbase.prototype.submitQuiz= function(quiz_entry){
+    Fbase.prototype.submitQuiz= function(quizCell, testerCell){
         // Separate the attributes for now to be explicit
-        var cellId = cell.get_id();
-        var text = cell.get_text();
+        var cellId = testerCell.get_id();
+        var text = quizCell.get_text();
         var user = IPython.google_drive.user_info;
         var userId = user.id;
-        var quizId = cellId; // Re-assign this explicitly for now to be explicit
+        this.submitComment({"cell_id" : cellId, "text" : text, "time" : Date.now(), "user_id" : userId, "username" : user.name});
 
-        // Partition the quizzes by user id so that Firebase can handle permissions separately
-        var url = this.baseURI + '/quizzes/' + quizId + "/" + userId + "/submissions/"; 
-        var quizSubmissionsRef = new Firebase(url);
-
-        // Generate a reference to a new location with push
-        var newPushRef = quizSubmissionRef.push();
-
-        newPushRef.set(quiz_obj);
-
-        console.log(newPushRef.name());
     }
-
-
-
 
     IPython.Fbase = Fbase;
     return IPython
