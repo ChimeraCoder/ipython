@@ -452,8 +452,7 @@ var IPython = (function (IPython) {
         // If the cell is a quiz cell, it should not be rendered
         if (data.metadata.isQuiz === true){
 	    //make the cell not draggable
-	    this.element.removeAttr('draggable');
-	    this.element.off('dragstart');
+	    this.set_draggable(false);
 
             // Check if the user is the owner of the file
             // If so, render the element differently

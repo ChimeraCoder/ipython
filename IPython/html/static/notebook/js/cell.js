@@ -95,7 +95,7 @@ var IPython = (function (IPython) {
     Cell.prototype.bind_events = function () {
         var that = this;
         // We trigger events so that Cell doesn't have to depend on Notebook.
-        that.element.mouseup(function (event) {
+        this.element.mouseup(function (event) {
             if (that.selected === false) {
                 $([IPython.events]).trigger('select.Cell', {'cell':that});
             }
@@ -110,18 +110,20 @@ var IPython = (function (IPython) {
                 $([IPython.events]).trigger("set_dirty.Notebook", {value: true});
             });
         }
-        that.element.attr('draggable', 'true');
-        that.element.on('dragstart', function(e){
-            e.stopPropagation();
-            var oe = e.originalEvent;
-            oe.dataTransfer.effectAllowed = 'copy';
-            IPython.notebook.current_dragging_cell = that;
-            $([IPython.events]).trigger('dragstart.Cell', {'cell':that});
-            //oe.dataTransfer.setData('application/json', that);
-        });
-        this.element.on('dragend', function(e){
-            $([IPython.events]).trigger('dragend.Cell', {'cell':that});
-        });
+        this.set_draggable(true);
+    };
+
+    Cell.prototype.drag_start = function(e){
+        e.stopPropagation();
+        var oe = e.originalEvent;
+        oe.dataTransfer.effectAllowed = 'copy';
+        IPython.notebook.current_dragging_cell = this;
+        $([IPython.events]).trigger('dragstart.Cell', {'cell':this});
+        //oe.dataTransfer.setData('application/json', that);
+    }
+
+    Cell.prototype.drag_end =  function(e){
+        $([IPython.events]).trigger('dragend.Cell', {'cell':this});
     };
 
     /**
@@ -391,6 +393,17 @@ var IPython = (function (IPython) {
             }
         }
         return null;
+    }
+
+    Cell.prototype.set_draggable = function(draggable){
+        this.element.prop('draggable', draggable);
+        if(draggable){
+            this.element.on('dragstart', $.proxy(this.drag_start, this));
+            this.element.on('dragend',$.proxy(this.drag_end, this));
+        }else{
+            this.element.off('dragstart');
+            this.element.off('dragend');
+        }
     }
 
 
