@@ -466,8 +466,20 @@ var IPython = (function (IPython) {
                 this.submit_quiz_tests_btn.click(function(event){
                     //Get the actual submission content
                     var quiz_entry = IPython.notebook.get_prev_code_cell(that);
-                    //Post to Firebase
-                    IPython.firebase.submitQuiz(quiz_entry, that)
+                    var cellId = that.get_id();
+                    var user = IPython.google_drive.user_info;
+                    var userId = user.id;
+                    data = {
+                        "cell_id" : cellId,
+                        "text" : "Quiz Submission",
+                        "time" : Date.now(),
+                        "user_id" : userId,
+                        "username" : user.name,
+                        attachment_cells:[
+                            quiz_entry.toJSON()
+                        ]
+                    }
+                    IPython.firebase.submitComment(data);
                 })
 
                 this.element.append(this.run_quiz_tests_btn);

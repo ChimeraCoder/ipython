@@ -83,16 +83,6 @@ var IPython = (function (IPython) {
     }
 
 
-    Fbase.prototype.submitQuiz= function(quizCell, testerCell){
-        // Separate the attributes for now to be explicit
-        var cellId = testerCell.get_id();
-        var text = quizCell.get_text();
-        var user = IPython.google_drive.user_info;
-        var userId = user.id;
-        this.submitComment({"cell_id" : cellId, "text" : text, "time" : Date.now(), "user_id" : userId, "username" : user.name});
-
-    }
-
     IPython.Fbase = Fbase;
     return IPython
 
