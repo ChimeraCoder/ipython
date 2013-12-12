@@ -9,3 +9,17 @@ a hack to deal with our current css styles and no new styling should be added in
 .button_container{
     padding-right: 5px;
 }
+
+.quiz-cell button{
+    margin-left: 5px;
+}
+
+.btn-success.quiz-test-button:after{
+    content: ": Passed";
+}
+.btn-danger.quiz-test-button:after{
+    content: ": Failed";
+}
+.btn-warning.quiz-test-button:after{
+    content: ": Syntax Error";
+}

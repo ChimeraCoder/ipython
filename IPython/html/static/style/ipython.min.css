@@ -90,6 +90,8 @@ div.output_prompt{color:darkred;}
 .CodeMirror-gutters{border-bottom-left-radius:4px;border-top-left-radius:4px;}
 .CodeMirror pre{padding:0;border:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}
 div#sidebar_panel{width:299px;margin-left:0;background-color:#fafafa;overflow-y:auto;}
+#comment_list:empty{text-align:center;}
+#comment_list:empty:before{margin:5px;color:#c7c7c7;content:"No Comment Yet";font-size:12px;font-weight:500;text-transform:uppercase;}
 div#comment_widget .comment{position:relative;}div#comment_widget .comment.highlight{background-color:#ffffaa;}
 div#comment_widget .comment .user_avatar{position:absolute;left:5px;top:5px;width:30px;height:30px;background-size:100% 100%;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);-moz-box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);box-shadow:inset 0 0 3px 0 rgba(0, 0, 0, 0.5);}
 div#comment_widget .comment .content{margin-left:40px;padding:5px 5px 5px 0px;border-bottom:1px solid #ebebeb;}div#comment_widget .comment .content .comment_title{font-size:12px;line-height:15px;}div#comment_widget .comment .content .comment_title .user_name{color:#7a7a7a;}

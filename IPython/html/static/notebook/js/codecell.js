@@ -279,19 +279,19 @@ var IPython = (function (IPython) {
 
     CodeCell.prototype.handle_output = function(message){
         if(this.isQuiz() && !IPython.notebook.isAuthor()){
+            this.run_quiz_tests_btn.attr("class", "btn quiz-test-button");
             if(message.msg_type === "pyout"){
-                this.run_quiz_tests_btn.attr("class", "btn");
                 if(message.content.data["text/plain"] == "True"){
                     // The test passes
                     this.run_quiz_tests_btn.addClass("btn-success");
                 } else {
                     // The test fails
-                    this.run_quiz_tests_btn.addClass("btn-warning");
+                    this.run_quiz_tests_btn.addClass("btn-danger");
                 }
             } else if(message.msg_type === "pyerr"){
-                this.run_quiz_tests_btn.addClass("btn-danger");
+                this.run_quiz_tests_btn.addClass("btn-warning");
             } else {
-                this.run_quiz_tests_btn.addClass("btn-danger");
+                this.run_quiz_tests_btn.addClass("btn-warning");
             } 
         } else {
                 this.output_area.handle_output(message);
@@ -456,8 +456,9 @@ var IPython = (function (IPython) {
             // If so, render the element differently
             if(!IPython.notebook.isAuthor()){
                 this.element.empty();
-                this.run_quiz_tests_btn = $('<button class="btn">Run Test</button>');
-                this.submit_quiz_tests_btn = $('<button class="btn">Submit Test</button>');
+                this.element.addClass('quiz-cell');
+                this.run_quiz_tests_btn = $('<button class="btn quiz-test-button"><i class="icon-play"></i> Run Quiz Test</button>');
+                this.submit_quiz_tests_btn = $('<button class="btn"><i class="icon-circle-arrow-up"></i> Submit Quiz</button>');
                 var that = this;
                 this.run_quiz_tests_btn.mouseup(function(event){
                     event.stopPropagation();
@@ -538,7 +539,6 @@ var IPython = (function (IPython) {
 
     CodeCell.prototype.push_comment = function(comment){
         IPython.Cell.prototype.push_comment.apply(this, [comment]);
-        console.log(comment);
         if(this.isQuiz()&&IPython.notebook.isAuthor()){
             if(!this.hasOwnProperty('stat')){
                 this.stat = {
