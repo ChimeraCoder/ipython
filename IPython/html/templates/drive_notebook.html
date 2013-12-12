@@ -197,12 +197,24 @@ class="notebook_app"
         </div>
       </div>
       <div id="sidebar_panel" class="span3" style="">
-        <div id="cell_info_wrapper">
-
+        <div id="stat_widget" class="hide">
+          <div class="widget_title">Quiz Statistics</div>
+          <div class="stat_data" id="stat_success">
+            <div class="stat_data_title">Success</div>
+            <div class="stat_data_value">0</div>
+          </div>
+          <div class="stat_data" id="stat_fail">
+            <div class="stat_data_title">Fail</div>
+            <div class="stat_data_value">0</div>
+          </div>
+          <div class="stat_data" id="stat_total">
+            <div class="stat_data_title">Total</div>
+            <div class="stat_data_value">0</div>
+          </div>
         </div>
         <div id="comment_widget">
-          <div id="comment_list">
-          </div>
+          <div class="widget_title">Comments</div>
+          <div id="comment_list"></div>
           <div id="comment_input_area">
               <textarea id="comment_textarea" rows="3"></textarea>
               <div id="comment_attachment_area" class="well well-small">
@@ -272,6 +284,7 @@ class="notebook_app"
 <script src="{{ static_url("notebook/js/notificationwidget.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/notificationarea.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/commentwidget.js") }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ static_url("notebook/js/statwidget.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/tooltip.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/config.js") }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ static_url("notebook/js/main.js") }}" type="text/javascript" charset="utf-8"></script>

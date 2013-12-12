@@ -145,6 +145,7 @@ var IPython = (function (IPython) {
         this.element.addClass('selected');
         this.selected = true;
         this.display_comments_in_widget();
+        this.update_stat_in_widget();
     };
 
 
@@ -384,6 +385,17 @@ var IPython = (function (IPython) {
         }
     }
 
+    Cell.prototype.push_comment = function(comment){
+        if (!this.hasOwnProperty("comments")){
+            this.comments = [];
+        }
+        this.comments.push(comment);
+    }
+
+    Cell.prototype.update_stat_in_widget = function(){
+        IPython.stat_widget.update(this);
+    }
+
     Cell.prototype.get_comment_by_id = function(id){
         if (!this.hasOwnProperty("comments"))return null;
         for(var i = 0; i < this.comments.length; i++){
@@ -404,6 +416,10 @@ var IPython = (function (IPython) {
             this.element.off('dragstart');
             this.element.off('dragend');
         }
+    }
+
+    Cell.prototype.isQuiz = function(){
+        return false;
     }
 
 

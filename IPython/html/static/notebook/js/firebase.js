@@ -63,21 +63,19 @@ var IPython = (function (IPython) {
 
         newPushRef.set(comment_obj);
 
-        console.log(newPushRef.name());
+        console.log(comment_obj);
     }
 
 
     Fbase.prototype.updateCellComments = function(comment){
         var parentCell = IPython.notebook.get_cell_by_id(comment.cell_id);
         if(parentCell){
-            if (!parentCell.hasOwnProperty("comments")){
-                parentCell.comments = [];
-            }
-            parentCell.comments.push(comment);
+            parentCell.push_comment(comment);
 
             //If the current cell is selected, append it to the widget
             if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
                 IPython.comment_widget.insert_comment(comment);
+                IPython.stat_widget.update(parentCell);
             }
         }
     }

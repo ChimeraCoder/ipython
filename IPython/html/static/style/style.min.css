@@ -1522,6 +1522,7 @@ body.notebook_app{overflow:hidden;}
 span#notebook_name{height:1em;line-height:1em;padding:3px;border:none;font-size:146.5%;}
 div#notebook_panel{position:relative;z-index:2;padding:0px;-webkit-box-shadow:0 -1px 10px rgba(0, 0, 0, 0.1);-moz-box-shadow:0 -1px 10px rgba(0, 0, 0, 0.1);box-shadow:0 -1px 10px rgba(0, 0, 0, 0.1);}
 div#sidebar_panel{position:relative;}
+.widget_title{color:#535353;text-transform:uppercase;font-weight:400;text-align:center;margin-top:5px;letter-spacing:1px;}
 div#notebook{overflow-y:scroll;overflow-x:auto;width:100%;padding:5px 5px 15px 5px;}
 div.ui-widget-content{border:1px solid #ababab;outline:none;}
 pre.dialog{background-color:#f7f7f7;border:1px solid #ddd;border-radius:4px;padding:0.4em;padding-left:2em;}
@@ -1586,7 +1587,13 @@ div.quickhelp{float:left;width:50%;}
 .rendered_html *+img{margin-top:1em;}
 span#save_widget{padding:0px 5px;margin-top:12px;}
 span#checkpoint_status,span#autosave_status{font-size:small;}
-@media (max-width:767px){span#save_widget{font-size:small;} span#checkpoint_status,span#autosave_status{font-size:x-small;}}@media (max-width:767px){span#checkpoint_status,span#autosave_status{display:none;}}@media (min-width:768px) and (max-width:979px){span#checkpoint_status{display:none;} span#autosave_status{font-size:x-small;}}div.text_cell{padding:5px 5px 5px 5px;}
+@media (max-width:767px){span#save_widget{font-size:small;} span#checkpoint_status,span#autosave_status{font-size:x-small;}}@media (max-width:767px){span#checkpoint_status,span#autosave_status{display:none;}}@media (min-width:768px) and (max-width:979px){span#checkpoint_status{display:none;} span#autosave_status{font-size:x-small;}}#stat_widget{overflow:hidden;border-bottom:1px solid #ebebeb;}
+.stat_data{text-align:center;float:left;width:80px;margin:5px 8px;color:#fff;border:1px solid transparent;border-radius:4px;}.stat_data .stat_data_title{text-transform:uppercase;letter-spacing:1px;font-size:12px;}
+.stat_data .stat_data_value{font-size:26px;line-height:30px;height:30px;font-weight:300;}
+#stat_success{background-color:#5cb85c;}
+#stat_fail{background-color:#d9534f;}
+#stat_total{background-color:#5bc0de;}
+div.text_cell{padding:5px 5px 5px 5px;}
 div.text_cell_input{color:#000000;border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
 div.text_cell_render{outline:none;resize:none;width:inherit;border-style:none;padding:5px;color:#000000;}
 a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}

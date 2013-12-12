@@ -280,23 +280,21 @@ var IPython = (function (IPython) {
     CodeCell.prototype.handle_output = function(message){
         if(this.isQuiz() && !IPython.notebook.isAuthor()){
             if(message.msg_type === "pyout"){
-                this.run_quiz_tests_btn.removeClass("btn-success");
-                this.run_quiz_tests_btn.removeClass("btn-warning");
-                this.run_quiz_tests_btn.removeClass("btn-danger");
+                this.run_quiz_tests_btn.attr("class", "btn");
                 if(message.content.data["text/plain"] == "True"){
                     // The test passes
-                    this.run_quiz_tests_btn.addClass("btn-success")
+                    this.run_quiz_tests_btn.addClass("btn-success");
                 } else {
                     // The test fails
-                    this.run_quiz_tests_btn.addClass("btn-warning")
+                    this.run_quiz_tests_btn.addClass("btn-warning");
                 }
             } else if(message.msg_type === "pyerr"){
-                this.run_quiz_tests_btn.addClass("btn-danger")
+                this.run_quiz_tests_btn.addClass("btn-danger");
             } else {
-                this.run_quiz_tests_btn.addClass("btn-danger")
+                this.run_quiz_tests_btn.addClass("btn-danger");
             } 
         } else {
-                this.output_area.handle_output(message)
+                this.output_area.handle_output(message);
         }
     }
 
@@ -451,13 +449,12 @@ var IPython = (function (IPython) {
         IPython.Cell.prototype.fromJSON.apply(this, arguments);
         // If the cell is a quiz cell, it should not be rendered
         if (data.metadata.isQuiz === true){
-	    //make the cell not draggable
-	    this.set_draggable(false);
+            //make the cell not draggable
+            this.set_draggable(false);
 
             // Check if the user is the owner of the file
             // If so, render the element differently
             if(!IPython.notebook.isAuthor()){
-            // TODO don't hide it
                 this.element.empty();
                 this.run_quiz_tests_btn = $('<button class="btn">Run Test</button>');
                 this.submit_quiz_tests_btn = $('<button class="btn">Submit Test</button>');
@@ -479,9 +476,16 @@ var IPython = (function (IPython) {
                         "time" : Date.now(),
                         "user_id" : userId,
                         "username" : user.name,
-                        attachment_cells:[
+                        "attachment_cells":[
                             quiz_entry.toJSON()
                         ]
+                    }
+                    if(that.run_quiz_tests_btn.hasClass("btn-warning")||that.run_quiz_tests_btn.hasClass("btn-danger")){
+                        data.quiz_status = 1;
+                    }else if(that.run_quiz_tests_btn.hasClass("btn-success")){
+                        data.quiz_status = 2;
+                    }else{
+                        data.quiz_status = -1;
                     }
                     IPython.firebase.submitComment(data);
                 })
@@ -532,6 +536,26 @@ var IPython = (function (IPython) {
         return data;
     };
 
+    CodeCell.prototype.push_comment = function(comment){
+        IPython.Cell.prototype.push_comment.apply(this, [comment]);
+        console.log(comment);
+        if(this.isQuiz()&&IPython.notebook.isAuthor()){
+            if(!this.hasOwnProperty('stat')){
+                this.stat = {
+                    success: 0,
+                    fail: 0,
+                    total: 0
+                }
+            }
+            if(comment.quiz_status===1){
+                this.stat.fail++;
+                this.stat.total++;
+            }else if(comment.quiz_status===2){
+                this.stat.success++;
+                this.stat.total++;
+            }
+        }
+    }
 
     CodeCell.prototype.isQuiz = function(){
         return this.metadata.isQuiz;

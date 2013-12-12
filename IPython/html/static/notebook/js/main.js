@@ -110,6 +110,7 @@ function (marked) {
         IPython.firebase = new IPython.Fbase();
         IPython.notebook.load_drive_notebook(driveFileId);
         IPython.comment_widget = new IPython.CommentWidget('div#comment_widget');
+        IPython.stat_widget = new IPython.StatWidget('div#stat_widget');
     }else{
         IPython.notebook.load_notebook(notebookName, notebookPath);
     }
