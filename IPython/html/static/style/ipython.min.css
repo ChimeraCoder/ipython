@@ -103,7 +103,8 @@ div#comment_widget .comment.comment_highlight .reply_button{visibility:visible;c
 div#comment_input_area{position:relative;padding:5px;}div#comment_input_area #comment_reply_to{position:absolute;top:10px;left:10px;cursor:pointer;height:20px;line-height:20px;}div#comment_input_area #comment_reply_to .remove-mark:before{content:"\f064";width:10px;text-align:center;}
 div#comment_input_area #comment_reply_to:hover .remove-mark:before{content:"\f00d";}
 div#comment_input_area #comment_textarea{height:150px;width:275px;max-width:275px;line-height:22px;overflow:hidden;}
-div#comment_input_area #comment_attachment_area{padding-bottom:30px;margin-bottom:10px;}div#comment_input_area #comment_attachment_area.dragover{border:1px dashed #4b4b4b;}
+div#comment_input_area #comment_attachment_area{margin-bottom:10px;}div#comment_input_area #comment_attachment_area.dragging_to{background-color:#FCDEA9;}div#comment_input_area #comment_attachment_area.dragging_to:after{color:#4b4b4b;height:20px;line-height:20px;font-size:14px;content:"Drop Cell Here...";border-radius:3px;display:block;}
+div#comment_input_area #comment_attachment_area.dragover:after{background-color:#58c0ee;content:"";}
 div#comment_input_area #comment_attachment_area .attachment_cell{display:block;margin-bottom:10px;height:20px;line-height:20px;font-size:14px;background-color:#58c0ee;}div#comment_input_area #comment_attachment_area .attachment_cell .remove-mark{display:block;float:right;line-height:20px;visibility:hidden;cursor:pointer;}
 div#comment_input_area #comment_attachment_area .attachment_cell:hover .remove-mark{visibility:visible;}
 #attachment_cell_modal{width:760px;margin-left:-380px;}

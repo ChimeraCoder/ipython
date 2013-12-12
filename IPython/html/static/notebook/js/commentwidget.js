@@ -101,6 +101,8 @@ var IPython = (function (IPython) {
         this.comment_attachment_area.on('drop', $.proxy(this.cell_drop, this))
         this.comment_attachment_area.on('click', '.attachment_cell > .remove-mark', $.proxy(this.comment_attachment_remove, this));
         this.comment_textarea.on('keydown', $.proxy(this.comment_submit, this));
+        $([IPython.events]).on('dragstart.Cell', $.proxy(this.dragstart, this));
+        $([IPython.events]).on('dragend.Cell', $.proxy(this.dragend, this));
     };
 
     CommentWidget.prototype.display_attachment_cell = function (e) {
@@ -134,6 +136,14 @@ var IPython = (function (IPython) {
     CommentWidget.prototype.comment_attachment_remove = function (e) {
         $(e.currentTarget).closest('.attachment_cell').remove();
     };
+
+    CommentWidget.prototype.dragstart = function(e){
+        this.comment_attachment_area.addClass('dragging_to');
+    }
+
+    CommentWidget.prototype.dragend = function(e){
+        this.comment_attachment_area.removeClass('dragging_to');
+    }
 
     CommentWidget.prototype.cell_dragenter = function(e){
         this.comment_attachment_area.addClass('dragover');

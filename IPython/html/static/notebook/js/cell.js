@@ -116,7 +116,11 @@ var IPython = (function (IPython) {
             var oe = e.originalEvent;
             oe.dataTransfer.effectAllowed = 'copy';
             IPython.notebook.current_dragging_cell = that;
+            $([IPython.events]).trigger('dragstart.Cell', {'cell':that});
             //oe.dataTransfer.setData('application/json', that);
+        });
+        this.element.on('dragend', function(e){
+            $([IPython.events]).trigger('dragend.Cell', {'cell':that});
         });
     };
 

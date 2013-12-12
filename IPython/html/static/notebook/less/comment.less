@@ -122,10 +122,24 @@ div#comment_input_area{
   }
 
   #comment_attachment_area{
-    padding-bottom: 30px;
     margin-bottom: 10px;
+    &.dragging_to{
+      background-color: #FCDEA9;
+      &:after{
+        color: #4b4b4b;
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        content:"Drop Cell Here...";
+        border-radius: 3px;
+        display: block;
+      }
+    }
     &.dragover{
-      border: 1px dashed #4b4b4b;
+      &:after{
+        background-color: #58c0ee;
+        content:"";
+      }
     }
     .attachment_cell{
       display: block;
