@@ -546,7 +546,6 @@ var IPython = (function (IPython) {
     };
 
     CodeCell.prototype.push_comment = function(comment){
-        console.log(comment);
         if(this.isQuiz()){
             if(IPython.notebook.isAuthor()){
                 if(!this.hasOwnProperty('stat')){
@@ -569,6 +568,8 @@ var IPython = (function (IPython) {
                     IPython.Cell.prototype.push_comment.apply(this, [comment]);
                 }
             }
+        }else{
+            IPython.Cell.prototype.push_comment.apply(this, [comment]);
         }
     }
 
