@@ -71,12 +71,6 @@ var IPython = (function (IPython) {
         var parentCell = IPython.notebook.get_cell_by_id(comment.cell_id);
         if(parentCell){
             parentCell.push_comment(comment);
-
-            //If the current cell is selected, append it to the widget
-            if (IPython.notebook.get_selected_cell().get_id() === parentCell.get_id()){
-                IPython.comment_widget.insert_comment(comment);
-                IPython.stat_widget.update(parentCell);
-            }
         }
     }
 

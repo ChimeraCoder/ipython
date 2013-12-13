@@ -19,8 +19,7 @@
     var CellToolbar = IPython.CellToolbar;
 
     var change_check = function(cell, checked){
-        cell.metadata.isQuiz=checked;
-        cell.set_draggable.apply(cell, [!checked]);
+        cell.setQuiz(checked);
     };
 
     var add_quiz_checkbox = function(div, cell) {

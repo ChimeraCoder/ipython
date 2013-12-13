@@ -493,6 +493,14 @@ var IPython = (function (IPython) {
 
                 this.element.append(this.run_quiz_tests_btn);
                 this.element.append(this.submit_quiz_tests_btn);
+            }else{
+                if(!this.hasOwnProperty('stat')){
+                    this.stat = {
+                        success: 0,
+                        fail: 0,
+                        total: 0
+                    }
+                }
             }
         }
         if (data.cell_type === 'code') {
@@ -538,27 +546,50 @@ var IPython = (function (IPython) {
     };
 
     CodeCell.prototype.push_comment = function(comment){
-        IPython.Cell.prototype.push_comment.apply(this, [comment]);
-        if(this.isQuiz()&&IPython.notebook.isAuthor()){
-            if(!this.hasOwnProperty('stat')){
+        console.log(comment);
+        if(this.isQuiz()){
+            if(IPython.notebook.isAuthor()){
+                if(!this.hasOwnProperty('stat')){
+                    this.stat = {
+                        success: 0,
+                        fail: 0,
+                        total: 0
+                    }
+                }
+                if(comment.quiz_status===1){
+                    this.stat.fail++;
+                    this.stat.total++;
+                }else if(comment.quiz_status===2){
+                    this.stat.success++;
+                    this.stat.total++;
+                }
+                IPython.Cell.prototype.push_comment.apply(this, [comment]);
+            }else{
+                if(comment.user_id===IPython.google_drive.user_info.id||comment.parent_comment_user_id===IPython.google_drive.user_info.id){
+                    IPython.Cell.prototype.push_comment.apply(this, [comment]);
+                }
+            }
+        }
+    }
+
+
+
+    CodeCell.prototype.isQuiz = function(){
+        return this.metadata.isQuiz;
+    }
+
+     CodeCell.prototype.setQuiz = function(isQuiz){
+        this.metadata.isQuiz = isQuiz;
+        this.set_draggable(!isQuiz);
+         if(isQuiz){
+             if(!this.hasOwnProperty('stat')){
                 this.stat = {
                     success: 0,
                     fail: 0,
                     total: 0
                 }
             }
-            if(comment.quiz_status===1){
-                this.stat.fail++;
-                this.stat.total++;
-            }else if(comment.quiz_status===2){
-                this.stat.success++;
-                this.stat.total++;
-            }
-        }
-    }
-
-    CodeCell.prototype.isQuiz = function(){
-        return this.metadata.isQuiz;
+         }
     }
 
     IPython.CodeCell = CodeCell;

@@ -390,6 +390,10 @@ var IPython = (function (IPython) {
             this.comments = [];
         }
         this.comments.push(comment);
+        if (IPython.notebook.get_selected_cell().get_id() === this.get_id()){
+            IPython.comment_widget.insert_comment(comment);
+            IPython.stat_widget.update(this);
+        }
     }
 
     Cell.prototype.update_stat_in_widget = function(){

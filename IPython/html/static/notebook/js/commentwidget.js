@@ -208,6 +208,7 @@ var IPython = (function (IPython) {
             if(this.reply_head){
                 var comment_obj = this.reply_head.data('parent_comment');
                 data.parent_comment_id = comment_obj.comment_id;
+                data.parent_comment_user_id = comment_obj.user_id;
             }
             var attachment_cells = this.comment_attachment_area.find(".attachment_cell");
             attachment_cells = attachment_cells.map(function (index, element) {
